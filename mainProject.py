@@ -50,8 +50,8 @@ class formProfilPelanggan (project.ProfilPelanggan):
         super().__init__(parent)
         conn = sqlite3.connect('project.sqlite')
         cursor = conn.cursor()
-        data = cursor.execute("select * from Pelanggan where username=?", (username,)).fetchone()
-        saldo = cursor.execute("select * from SaldoPelanggan where username=?", (username,)).fetchone()
+        data = cursor.execute("select * from Pelanggan where Username=?", (username,)).fetchone()
+        saldo = cursor.execute("select * from SaldoPelanggan where Username=?", (username,)).fetchone()
         conn.close()
         self.nama.SetLabel(f"Nama : {data[0]}")
         self.username.SetLabel(f"Username : {data[1]}")
@@ -60,12 +60,29 @@ class formProfilPelanggan (project.ProfilPelanggan):
         self.tahunLahir.SetLabel(f"Tahun Lahir : {data[4]}")
         self.JumlahUang.SetLabel(f"Jumlah Uang : {saldo[1]}")
         self.JumlahHutang.SetLabel(f"Jumlah Hutang : {saldo[2]}")
+
+class formTabelPelanggan(project.LihatPelanggan):
+    def __init__(self, parent):
+        super().__init__(parent)
+        conn = sqlite3.connect('project.sqlite')
+        cursor = conn.cursor()
+        data = cursor.execute("select Nama, Pelanggan.Username, alamat, NomorHp, tahunLahir, JumlahUang, JumlahHutang from Pelanggan join SaldoPelanggan where Pelanggan.username = SaldoPelanggan.username").fetchall()
+        conn.close()
+        namaKolom = ('Nama', 'Username', 'Alamat', 'Nomor Hp', 'Tahun Lahir', 'Jumlah Uang', 'Jumlah Hutang')
+        for baris in range(len(data)):
+            self.Tabel.AppendRows()
+            for kolom in range(len(data[baris])):
+                self.Tabel.SetColLabelValue(kolom, namaKolom[kolom])
+                self.Tabel.SetCellValue(baris, kolom, str(data[baris][kolom]))
+
+            
         
         
     
 
 app = wx.App()
 # frame = MainHome(parent=None)
-frame = formProfilPelanggan(None, "felynir")
+# frame = formProfilPelanggan(None, "felynir")
+frame = formTabelPelanggan(None)
 frame.Show()
 app.MainLoop()

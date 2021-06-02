@@ -384,31 +384,31 @@ class LihatPelanggan ( wx.Frame ):
 
 		bSizer12 = wx.BoxSizer( wx.VERTICAL )
 
-		self.m_grid1 = wx.grid.Grid( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.Tabel = wx.grid.Grid( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, 0 )
 
 		# Grid
-		self.m_grid1.CreateGrid( 0, 7 )
-		self.m_grid1.EnableEditing( True )
-		self.m_grid1.EnableGridLines( True )
-		self.m_grid1.EnableDragGridSize( False )
-		self.m_grid1.SetMargins( 0, 0 )
+		self.Tabel.CreateGrid( 0, 7 )
+		self.Tabel.EnableEditing( True )
+		self.Tabel.EnableGridLines( True )
+		self.Tabel.EnableDragGridSize( False )
+		self.Tabel.SetMargins( 0, 0 )
 
 		# Columns
-		self.m_grid1.EnableDragColMove( False )
-		self.m_grid1.EnableDragColSize( True )
-		self.m_grid1.SetColLabelSize( 30 )
-		self.m_grid1.SetColLabelAlignment( wx.ALIGN_CENTER, wx.ALIGN_CENTER )
+		self.Tabel.EnableDragColMove( False )
+		self.Tabel.EnableDragColSize( True )
+		self.Tabel.SetColLabelSize( 30 )
+		self.Tabel.SetColLabelAlignment( wx.ALIGN_CENTER, wx.ALIGN_CENTER )
 
 		# Rows
-		self.m_grid1.EnableDragRowSize( True )
-		self.m_grid1.SetRowLabelSize( 80 )
-		self.m_grid1.SetRowLabelAlignment( wx.ALIGN_CENTER, wx.ALIGN_CENTER )
+		self.Tabel.EnableDragRowSize( True )
+		self.Tabel.SetRowLabelSize( 80 )
+		self.Tabel.SetRowLabelAlignment( wx.ALIGN_CENTER, wx.ALIGN_CENTER )
 
 		# Label Appearance
 
 		# Cell Defaults
-		self.m_grid1.SetDefaultCellAlignment( wx.ALIGN_LEFT, wx.ALIGN_TOP )
-		bSizer12.Add( self.m_grid1, 0, wx.ALL, 5 )
+		self.Tabel.SetDefaultCellAlignment( wx.ALIGN_LEFT, wx.ALIGN_TOP )
+		bSizer12.Add( self.Tabel, 0, wx.ALL, 5 )
 
 
 		self.SetSizer( bSizer12 )
