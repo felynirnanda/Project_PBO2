@@ -61,6 +61,14 @@ class formProfilPelanggan (project.ProfilPelanggan):
         self.JumlahUang.SetLabel(f"Jumlah Uang : {saldo[1]}")
         self.JumlahHutang.SetLabel(f"Jumlah Hutang : {saldo[2]}")
         
+class lihatSaldo (project.LihatSaldo):
+    def __init__(self, parent):
+        super().__init__(parent)
+        conn = sqlite3.connect('project.sqlite')
+        cursor = conn.cursor()
+        hasil = cursor.execute("select jumlahUang from SaldoPelanggan where noID = ?", (str(self.__nomorid),)).fetchone()[0]
+        conn.close()
+        self.m_staticText42.SetValue(str(hasil))
         
     
 
