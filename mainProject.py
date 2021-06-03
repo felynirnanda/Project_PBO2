@@ -157,6 +157,25 @@ class LihatSaldo(project.LihatSaldo):
         self.saldo.SetValue(str(hasil))
         return hasil
 
+class PinjamTabungan(project.Pinjam):
+    def __init__(self, parent):
+        super().__init__(parent)
+
+    def btn_OK_pinjamTabungan( self, event ):
+        uangPinjam = self.m_textCtrl21.GetValue()
+        hari = self.m_textCtrl23.GetValue()
+        bulan = hari / 30
+        bungaPinjam = bulan / 12 * 5 / 100 * uangPinjam
+        piutang = uangPinjam + bungaPinjam
+        self.__jumlahHutang += piutang
+        jumlahSaldo = self.__jumlahSaldo + uangPinjam 
+        self.__jumlahSaldo = jumlahSaldo
+        conn = sqlite3.connect('project.sqlite')
+        cursor = conn.cursor()
+        cursor.execute("update SaldoPelanggan set jumlahHutang = ? ,jumlahUang = ? where noID = ? ", (self.__jumlahHutang, self.__jumlahSaldo, self.__nomorid,))
+        conn.commit()
+        conn.close()
+        self.m_textCtrl22.SetValue(str(piutang))
 
 app = wx.App()
 frame = TambahNabung(parent=None)
