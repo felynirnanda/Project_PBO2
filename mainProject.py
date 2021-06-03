@@ -131,7 +131,7 @@ class TambahNabung (project.TambahTabungan):
             print(kodedlg)
             if kodedlg != 5104:
                 waktu = time.ctime()
-                current = str(LihatSaldo(None).btn_LihatSaldo(event=Any))
+                current = str(LihatSaldo(parent=None).btn_LihatSaldo(event=None))
                 jumlah_Saldo = int(current) + int(jumlah)
                 conn = sqlite3.connect('project.sqlite')
                 cursor = conn.cursor()
