@@ -443,19 +443,30 @@ class LihatSaldo ( wx.Frame ):
 
 		gSizer5 = wx.GridSizer( 0, 2, 0, 0 )
 
+		self.m_staticText31 = wx.StaticText( self, wx.ID_ANY, u"username", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText31.Wrap( -1 )
+
+		gSizer5.Add( self.m_staticText31, 0, wx.ALL, 5 )
+
+		self.inputNama = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		gSizer5.Add( self.inputNama, 0, wx.ALIGN_RIGHT|wx.ALL, 5 )
+
 		self.m_staticText35 = wx.StaticText( self, wx.ID_ANY, u"Jumlah Saldo Anda Saat ini", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText35.Wrap( -1 )
 
 		gSizer5.Add( self.m_staticText35, 0, wx.ALL, 5 )
 
-		self.m_textCtrl20 = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		gSizer5.Add( self.m_textCtrl20, 0, wx.ALIGN_RIGHT|wx.ALL, 5 )
+		self.saldo = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		gSizer5.Add( self.saldo, 0, wx.ALIGN_RIGHT|wx.ALL, 5 )
+
+		self.m_button15 = wx.Button( self, wx.ID_ANY, u"LIHAT", wx.DefaultPosition, wx.DefaultSize, 0 )
+		gSizer5.Add( self.m_button15, 0, wx.ALL, 5 )
+
+		self.m_button16 = wx.Button( self, wx.ID_ANY, u"OK", wx.DefaultPosition, wx.DefaultSize, 0 )
+		gSizer5.Add( self.m_button16, 0, wx.ALIGN_RIGHT|wx.ALL, 5 )
 
 
 		bSizer12.Add( gSizer5, 0, wx.EXPAND, 5 )
-
-		self.m_button14 = wx.Button( self, wx.ID_ANY, u"OK", wx.DefaultPosition, wx.DefaultSize, 0 )
-		bSizer12.Add( self.m_button14, 0, wx.ALIGN_CENTER|wx.ALL, 5 )
 
 
 		self.SetSizer( bSizer12 )
@@ -463,8 +474,16 @@ class LihatSaldo ( wx.Frame ):
 
 		self.Centre( wx.BOTH )
 
+		# Connect Events
+		self.m_button15.Bind( wx.EVT_BUTTON, self.btn_LihatSaldo )
+
 	def __del__( self ):
 		pass
+
+
+	# Virtual event handlers, overide them in your derived class
+	def btn_LihatSaldo( self, event ):
+		event.Skip()
 
 
 ###########################################################################

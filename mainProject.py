@@ -1,4 +1,6 @@
+from typing import Any
 import wx
+from wx.core import NullGraphicsMatrix
 import project
 import sqlite3
 import time
@@ -85,17 +87,17 @@ class lihatSaldo (project.LihatSaldo):
         conn.close()
         self.m_staticText42.SetValue(str(hasil))
 
-class tambahTabungan(project.TambahTabungan):
-    def __init__(self, parent):
-        super().__init__(parent)
-        uangMasuk = self.m_textCtrl21.GetValue()
-        jumlahSaldoTabungan = self.__jumlahSaldo + uangMasuk
-        self.__jumlahSaldo = jumlahSaldoTabungan
-        conn = sqlite3.connect('project.sqlite')
-        cursor = conn.cursor()
-        cursor.execute("update SaldoPelanggan set jumlahUang = ? where noID = ? ", (jumlahSaldoTabungan, self.__nomorid,))
-        conn.commit()
-        conn.close() 
+# class tambahTabungan(project.TambahTabungan):
+#     def __init__(self, parent):
+#         super().__init__(parent)
+#         uangMasuk = self.m_textCtrl21.GetValue()
+#         jumlahSaldoTabungan = self.__jumlahSaldo + uangMasuk
+#         self.__jumlahSaldo = jumlahSaldoTabungan
+#         conn = sqlite3.connect('project.sqlite')
+#         cursor = conn.cursor()
+#         cursor.execute("update SaldoPelanggan set jumlahUang = ? where noID = ? ", (jumlahSaldoTabungan, self.__nomorid,))
+#         conn.commit()
+#         conn.close() 
 
 class tarik(project.Tarik):
     def __init__(self, parent):
@@ -118,6 +120,7 @@ class TambahNabung (project.TambahTabungan):
 
     def btn_OK_tambahTabungan( self, event ):
         jumlah = self.inputTabungan.GetValue()
+        username = self.inputUsername.GetValue()
         event.Skip()
         if jumlah.isdecimal() == False:
             wx.MessageBox('Maaf harus berupa angka saja', 'Informasi', wx.OK | wx.ICON_ERROR)
@@ -127,20 +130,37 @@ class TambahNabung (project.TambahTabungan):
             kodedlg = box.ShowModal()
             print(kodedlg)
             if kodedlg != 5104:
-                username = self.inputUsername.GetValue()
                 waktu = time.ctime()
+                current = str(LihatSaldo(None).btn_LihatSaldo(event=Any))
+                jumlah_Saldo = int(current) + int(jumlah)
                 conn = sqlite3.connect('project.sqlite')
                 cursor = conn.cursor()
-                query = "INSERT INTO Transaksi(username,jumlah,waktu) VALUES (?,?,?)"
+                query = "INSERT INTO Transaksi(username,tambahUang,waktu) VALUES (?,?,?)"
                 cursor.execute(query, (username, jumlah, waktu))
+                query = cursor.execute("update SaldoPelanggan set saldo = ? where Username = ? ", (jumlah_Saldo, username,))
+                cursor.execute(query)
                 conn.commit()
                 conn.close()
                 self.Destroy()
+        
+class LihatSaldo(project.LihatSaldo):
+    def __init__(self, parent):
+        project.LihatSaldo.__init__(self, parent)
+        # self.saldoSekarang = self.btn_LihatSaldo(event=None)
+    
+    def btn_LihatSaldo( self, event ):
+        nama = self.inputNama.GetValue()
+        conn = sqlite3.connect('project.sqlite')
+        cursor = conn.cursor()
+        hasil = cursor.execute("select saldo from SaldoPelanggan where Username = ?", (nama,)).fetchone()[0]
+        conn.close()
+        self.saldo.SetValue(str(hasil))
+        return hasil
 
 
 app = wx.App()
-# frame = MainHome(parent=None)
-# frame = formProfilPelanggan(None, "felynir")
 frame = TambahNabung(parent=None)
+# frame = formProfilPelanggan(None, "felynir")
+# frame = LihatSaldo(parent=None)
 frame.Show()
 app.MainLoop()
