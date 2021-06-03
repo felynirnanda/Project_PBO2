@@ -1,6 +1,7 @@
 import wx
 import project
 import sqlite3
+import time
 
 class DialogDaftar(project.daftarDialog):
     def __init__(self, parent):
@@ -87,10 +88,35 @@ class lihatSaldo (project.LihatSaldo):
         self.m_staticText42.SetValue(str(hasil))
         
     
+class TambahNabung (project.TambahTabungan):
+    def __init__(self, parent):
+        project.TambahTabungan.__init__(self, parent)
+
+    def btn_OK_tambahTabungan( self, event ):
+        jumlah = self.inputTabungan.GetValue()
+        event.Skip()
+        if jumlah.isdecimal() == False:
+            wx.MessageBox('Maaf harus berupa angka saja', 'Informasi', wx.OK | wx.ICON_INFORMATION)
+            
+        else:
+            box = wx.MessageDialog(None, 'Apakah data sudah benar', 'Informasi', wx.YES_NO | wx.ICON_QUESTION)
+            kodedlg = box.ShowModal()
+            print(kodedlg)
+            if kodedlg != 5104:
+                username = self.inputUsername.GetValue()
+                waktu = time.ctime()
+                conn = sqlite3.connect('project.sqlite')
+                cursor = conn.cursor()
+                query = "INSERT INTO Transaksi(username,jumlah,waktu) VALUES (?,?,?)"
+                cursor.execute(query, (username, jumlah, waktu))
+                conn.commit()
+                conn.close()
+                self.Destroy()
+
 
 app = wx.App()
 # frame = MainHome(parent=None)
 # frame = formProfilPelanggan(None, "felynir")
-frame = formTabelPelanggan(None)
+frame = TambahNabung(parent=None)
 frame.Show()
 app.MainLoop()

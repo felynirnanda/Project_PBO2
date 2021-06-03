@@ -434,7 +434,7 @@ class LihatSaldo ( wx.Frame ):
 
 		bSizer12 = wx.BoxSizer( wx.VERTICAL )
 
-		self.m_staticText32 = wx.StaticText( self, wx.ID_ANY, u"SALDO", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText32 = wx.StaticText( self, wx.ID_ANY, u"Lihat Saldo", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText32.Wrap( -1 )
 
 		self.m_staticText32.SetFont( wx.Font( 10, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD, False, "Arial" ) )
@@ -452,15 +452,10 @@ class LihatSaldo ( wx.Frame ):
 		gSizer5.Add( self.m_textCtrl20, 0, wx.ALIGN_RIGHT|wx.ALL, 5 )
 
 
-		bSizer12.Add( gSizer5, 1, wx.EXPAND, 5 )
+		bSizer12.Add( gSizer5, 0, wx.EXPAND, 5 )
 
-		bSizer10 = wx.BoxSizer( wx.VERTICAL )
-
-		self.m_button10 = wx.Button( self, wx.ID_ANY, u"MyButton", wx.DefaultPosition, wx.DefaultSize, 0 )
-		bSizer10.Add( self.m_button10, 0, wx.ALL, 5 )
-
-
-		bSizer12.Add( bSizer10, 1, wx.EXPAND, 5 )
+		self.m_button14 = wx.Button( self, wx.ID_ANY, u"OK", wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer12.Add( self.m_button14, 0, wx.ALIGN_CENTER|wx.ALL, 5 )
 
 
 		self.SetSizer( bSizer12 )
@@ -495,13 +490,21 @@ class TambahTabungan ( wx.Frame ):
 
 		gSizer3 = wx.GridSizer( 0, 2, 0, 0 )
 
+		self.m_staticText301 = wx.StaticText( self, wx.ID_ANY, u"username ", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText301.Wrap( -1 )
+
+		gSizer3.Add( self.m_staticText301, 0, wx.ALL, 5 )
+
+		self.inputUsername = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		gSizer3.Add( self.inputUsername, 0, wx.ALIGN_RIGHT|wx.ALL, 5 )
+
 		self.m_staticText31 = wx.StaticText( self, wx.ID_ANY, u"Masukan jumlah uang yang ingin Anda tabung : ", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText31.Wrap( -1 )
 
 		gSizer3.Add( self.m_staticText31, 0, wx.ALL, 5 )
 
-		self.m_textCtrl21 = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		gSizer3.Add( self.m_textCtrl21, 0, wx.ALL|wx.ALIGN_RIGHT, 5 )
+		self.inputTabungan = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		gSizer3.Add( self.inputTabungan, 0, wx.ALL|wx.ALIGN_RIGHT, 5 )
 
 
 		bSizer13.Add( gSizer3, 0, wx.EXPAND, 5 )
@@ -515,8 +518,16 @@ class TambahTabungan ( wx.Frame ):
 
 		self.Centre( wx.BOTH )
 
+		# Connect Events
+		self.m_button18.Bind( wx.EVT_BUTTON, self.btn_OK_tambahTabungan )
+
 	def __del__( self ):
 		pass
+
+
+	# Virtual event handlers, overide them in your derived class
+	def btn_OK_tambahTabungan( self, event ):
+		event.Skip()
 
 
 ###########################################################################
