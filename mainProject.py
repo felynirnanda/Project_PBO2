@@ -73,9 +73,7 @@ class formTabelPelanggan(project.LihatPelanggan):
             self.Tabel.AppendRows()
             for kolom in range(len(data[baris])):
                 self.Tabel.SetColLabelValue(kolom, namaKolom[kolom])
-                self.Tabel.SetCellValue(baris, kolom, str(data[baris][kolom]))
-
-            
+                self.Tabel.SetCellValue(baris, kolom, str(data[baris][kolom]))        
         
 class lihatSaldo (project.LihatSaldo):
     def __init__(self, parent):
@@ -98,6 +96,20 @@ class tambahTabungan(project.TambahTabungan):
         conn.commit()
         conn.close() 
 
+class tarik(project.Tarik):
+    def __init__(self, parent):
+        super().__init__(parent)
+        uangTarik = self.m_textCtrl21.GetValue()
+        if self.__jumlahSaldo < uangTarik:
+            print("Maaf saldo anda tidak mencukupi")
+        else:
+            jumlahSaldoTarik = self.__jumlahSaldo - uangTarik
+            self.__jumlahSaldo = jumlahSaldoTarik
+            conn = sqlite3.connect('project.sqlite')
+            cursor = conn.cursor()
+            cursor.execute("update SaldoPelanggan set jumlahUang = ? where noID = ? ", (self.__jumlahSaldo, self.__nomorid,))
+            conn.commit()
+            conn.close()
     
 
 app = wx.App()
