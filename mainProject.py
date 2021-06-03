@@ -120,7 +120,7 @@ class TambahNabung (project.TambahTabungan):
         jumlah = self.inputTabungan.GetValue()
         event.Skip()
         if jumlah.isdecimal() == False:
-            wx.MessageBox('Maaf harus berupa angka saja', 'Informasi', wx.OK | wx.ICON_INFORMATION)
+            wx.MessageBox('Maaf harus berupa angka saja', 'Informasi', wx.OK | wx.ICON_ERROR)
             
         else:
             box = wx.MessageDialog(None, 'Apakah data sudah benar', 'Informasi', wx.YES_NO | wx.ICON_QUESTION)
