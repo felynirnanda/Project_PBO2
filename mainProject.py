@@ -1,6 +1,6 @@
 from typing import Any
 import wx
-from wx.core import NullGraphicsMatrix
+from wx.core import Frame, NullGraphicsMatrix
 import project
 import sqlite3
 import time
@@ -102,9 +102,11 @@ class lihatSaldo (project.LihatSaldo):
 class tarik(project.Tarik):
     def __init__(self, parent):
         super().__init__(parent)
+    
+    def saldoTarik(self, event):
         uangTarik = self.m_textCtrl21.GetValue()
         if self.__jumlahSaldo < uangTarik:
-            print("Maaf saldo anda tidak mencukupi")
+            wx.MessageBox('Maaf saldo tidak mencukupi', wx.OK | wx.ICON_ERROR)
         else:
             jumlahSaldoTarik = self.__jumlahSaldo - uangTarik
             self.__jumlahSaldo = jumlahSaldoTarik
@@ -113,7 +115,9 @@ class tarik(project.Tarik):
             cursor.execute("update SaldoPelanggan set jumlahUang = ? where noID = ? ", (self.__jumlahSaldo, self.__nomorid,))
             conn.commit()
             conn.close()
-    
+            wx.MessageBox('Sisa saldo anda',self.__jumlahSaldo, wx.OK | wx.ICON_ERROR)
+
+
 class TambahNabung (project.TambahTabungan):
     def __init__(self, parent):
         project.TambahTabungan.__init__(self, parent)
@@ -163,7 +167,7 @@ class PinjamTabungan(project.Pinjam):
 
     def btn_OK_pinjamTabungan( self, event ):
         uangPinjam = self.m_textCtrl21.GetValue()
-        hari = self.m_textCtrl23.GetValue()
+        hari = float(self.m_textCtrl23.GetValue())
         bulan = hari / 30
         bungaPinjam = bulan / 12 * 5 / 100 * uangPinjam
         piutang = uangPinjam + bungaPinjam
@@ -178,8 +182,9 @@ class PinjamTabungan(project.Pinjam):
         self.m_textCtrl22.SetValue(str(piutang))
 
 app = wx.App()
-frame = TambahNabung(parent=None)
+# frame = TambahNabung(parent=None)
 # frame = formProfilPelanggan(None, "felynir")
 # frame = LihatSaldo(parent=None)
+frame = PinjamTabungan (parent=None)
 frame.Show()
 app.MainLoop()
