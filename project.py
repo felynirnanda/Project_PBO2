@@ -384,31 +384,31 @@ class LihatPelanggan ( wx.Frame ):
 
 		bSizer12 = wx.BoxSizer( wx.VERTICAL )
 
-		self.m_grid1 = wx.grid.Grid( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.Tabel = wx.grid.Grid( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, 0 )
 
 		# Grid
-		self.m_grid1.CreateGrid( 0, 7 )
-		self.m_grid1.EnableEditing( True )
-		self.m_grid1.EnableGridLines( True )
-		self.m_grid1.EnableDragGridSize( False )
-		self.m_grid1.SetMargins( 0, 0 )
+		self.Tabel.CreateGrid( 0, 7 )
+		self.Tabel.EnableEditing( True )
+		self.Tabel.EnableGridLines( True )
+		self.Tabel.EnableDragGridSize( False )
+		self.Tabel.SetMargins( 0, 0 )
 
 		# Columns
-		self.m_grid1.EnableDragColMove( False )
-		self.m_grid1.EnableDragColSize( True )
-		self.m_grid1.SetColLabelSize( 30 )
-		self.m_grid1.SetColLabelAlignment( wx.ALIGN_CENTER, wx.ALIGN_CENTER )
+		self.Tabel.EnableDragColMove( False )
+		self.Tabel.EnableDragColSize( True )
+		self.Tabel.SetColLabelSize( 30 )
+		self.Tabel.SetColLabelAlignment( wx.ALIGN_CENTER, wx.ALIGN_CENTER )
 
 		# Rows
-		self.m_grid1.EnableDragRowSize( True )
-		self.m_grid1.SetRowLabelSize( 80 )
-		self.m_grid1.SetRowLabelAlignment( wx.ALIGN_CENTER, wx.ALIGN_CENTER )
+		self.Tabel.EnableDragRowSize( True )
+		self.Tabel.SetRowLabelSize( 80 )
+		self.Tabel.SetRowLabelAlignment( wx.ALIGN_CENTER, wx.ALIGN_CENTER )
 
 		# Label Appearance
 
 		# Cell Defaults
-		self.m_grid1.SetDefaultCellAlignment( wx.ALIGN_LEFT, wx.ALIGN_TOP )
-		bSizer12.Add( self.m_grid1, 0, wx.ALL, 5 )
+		self.Tabel.SetDefaultCellAlignment( wx.ALIGN_LEFT, wx.ALIGN_TOP )
+		bSizer12.Add( self.Tabel, 0, wx.ALL, 5 )
 
 
 		self.SetSizer( bSizer12 )
@@ -434,15 +434,33 @@ class LihatSaldo ( wx.Frame ):
 
 		bSizer12 = wx.BoxSizer( wx.VERTICAL )
 
-		self.m_staticText28 = wx.StaticText( self, wx.ID_ANY, u"Jumlah Saldo Anda :", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText28.Wrap( -1 )
+		self.m_staticText32 = wx.StaticText( self, wx.ID_ANY, u"SALDO", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText32.Wrap( -1 )
 
-		bSizer12.Add( self.m_staticText28, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
+		self.m_staticText32.SetFont( wx.Font( 10, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD, False, "Arial" ) )
 
-		self.m_staticText42 = wx.StaticText( self, wx.ID_ANY, u"MyLabel", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText42.Wrap( -1 )
+		bSizer12.Add( self.m_staticText32, 0, wx.ALIGN_CENTER|wx.ALL, 5 )
 
-		bSizer12.Add( self.m_staticText42, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
+		gSizer5 = wx.GridSizer( 0, 2, 0, 0 )
+
+		self.m_staticText35 = wx.StaticText( self, wx.ID_ANY, u"Jumlah Saldo Anda Saat ini", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText35.Wrap( -1 )
+
+		gSizer5.Add( self.m_staticText35, 0, wx.ALL, 5 )
+
+		self.m_textCtrl20 = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		gSizer5.Add( self.m_textCtrl20, 0, wx.ALIGN_RIGHT|wx.ALL, 5 )
+
+
+		bSizer12.Add( gSizer5, 1, wx.EXPAND, 5 )
+
+		bSizer10 = wx.BoxSizer( wx.VERTICAL )
+
+		self.m_button10 = wx.Button( self, wx.ID_ANY, u"MyButton", wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer10.Add( self.m_button10, 0, wx.ALL, 5 )
+
+
+		bSizer12.Add( bSizer10, 1, wx.EXPAND, 5 )
 
 
 		self.SetSizer( bSizer12 )
