@@ -69,7 +69,19 @@ class lihatSaldo (project.LihatSaldo):
         hasil = cursor.execute("select jumlahUang from SaldoPelanggan where noID = ?", (str(self.__nomorid),)).fetchone()[0]
         conn.close()
         self.m_staticText42.SetValue(str(hasil))
-        
+
+class tambahTabungan(project.TambahTabungan):
+    def __init__(self, parent):
+        super().__init__(parent)
+        uangMasuk = self.m_textCtrl21.GetValue()
+        jumlahSaldoTabungan = self.__jumlahSaldo + uangMasuk
+        self.__jumlahSaldo = jumlahSaldoTabungan
+        conn = sqlite3.connect('project.sqlite')
+        cursor = conn.cursor()
+        cursor.execute("update SaldoPelanggan set jumlahUang = ? where noID = ? ", (jumlahSaldoTabungan, self.__nomorid,))
+        conn.commit()
+        conn.close() 
+
     
 
 app = wx.App()
