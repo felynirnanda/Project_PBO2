@@ -580,6 +580,20 @@ class Pinjam ( wx.Frame ):
 		self.m_textCtrl21 = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
 		gSizer3.Add( self.m_textCtrl21, 0, wx.ALL|wx.ALIGN_RIGHT, 5 )
 
+		self.m_staticText32 = wx.StaticText( self, wx.ID_ANY, u"Jumlah peminjaman anda", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText32.Wrap( -1 )
+
+		gSizer3.Add( self.m_staticText32, 0, wx.ALL, 5 )
+
+
+		gSizer3.Add( ( 0, 0), 1, wx.EXPAND, 5 )
+
+		self.m_textCtrl22 = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		gSizer3.Add( self.m_textCtrl22, 0, wx.ALL, 5 )
+
+
+		gSizer3.Add( ( 0, 0), 1, wx.EXPAND, 5 )
+
 
 		bSizer13.Add( gSizer3, 0, wx.EXPAND, 5 )
 
