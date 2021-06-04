@@ -1,6 +1,4 @@
-from typing import Any
 import wx
-from wx.core import Frame, NullGraphicsMatrix
 import project
 import sqlite3
 import time
@@ -139,8 +137,8 @@ class TambahNabung (project.TambahTabungan):
                 jumlah_Saldo = int(current) + int(jumlah)
                 conn = sqlite3.connect('project.sqlite')
                 cursor = conn.cursor()
-                query = "INSERT INTO Transaksi(username,tambahUang,waktu) VALUES (?,?,?)"
-                cursor.execute(query, (username, jumlah, waktu))
+                query = cursor.execute("INSERT INTO Transaksi(username,tambahUang,waktu) VALUES (?,?,?)", (username, jumlah, waktu,))
+                cursor.execute(query)
                 query = cursor.execute("update SaldoPelanggan set saldo = ? where Username = ? ", (jumlah_Saldo, username,))
                 cursor.execute(query)
                 conn.commit()
@@ -182,9 +180,9 @@ class PinjamTabungan(project.Pinjam):
         self.m_textCtrl22.SetValue(str(piutang))
 
 app = wx.App()
-# frame = TambahNabung(parent=None)
+frame = TambahNabung(parent=None)
 # frame = formProfilPelanggan(None, "felynir")
 # frame = LihatSaldo(parent=None)
-frame = PinjamTabungan (parent=None)
+# frame = PinjamTabungan (parent=None)
 frame.Show()
 app.MainLoop()
