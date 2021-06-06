@@ -46,6 +46,62 @@ class MainHome(project.MenuUtama):
     def homeFrameOnClose( self, event ):
     	self.Destroy()
 
+class MenuKaryawan(project.MenuKaryawan):
+    def __init__(self, parent, username):
+        super().__init__(parent)
+        self.username = username
+
+    def klikLihatPelanggan(self, event):
+        lhtPelanggan = formTabelPelanggan(self)
+        lhtPelanggan.show()
+        
+    def klikLihatProfilKaryawan(self, event):
+        lhtProfilKaryawan = formProfilKaryawan(self)
+        lhtProfilKaryawan.show()
+
+class MenuPelanggan(project.MenuPelanggan):
+    def __init__(self, parent):
+        super().__init__(parent)
+
+    def btnLihatProfilPelanggan(self, event):
+        lhtProfilPelanggan = formProfilPelanggan()
+        lhtProfilPelanggan.show()
+
+    # def btnBayarHutang(self, event):
+    #     bayarHutang = 
+
+    def btnTambah(self, event):
+        tambahTabungan = TambahNabung()
+        tambahTabungan.show()
+
+    def btnPinjam(self, event):
+        pinjam = PinjamTabungan()
+        pinjam.show()
+
+    def btnTarik(self, event):
+        tarikUang = tarik()
+        tarikUang.show()
+
+    def btnLihatSaldo(self, event):
+        lhtSaldo = LihatSaldo()
+        lhtSaldo.show()
+
+    # def btnKeluar(self, event):
+    #     menuUtama = 
+
+class formProfilKaryawan (project.ProfilKaryawan):
+    def __init__(self, parent, username):
+        super().__init__(parent)
+        conn = sqlite3.connect('project.sqlite')
+        cursor = conn.cursor()
+        kry = cursor.execute("select * from Karyawan where Username=?", (username,)).fetchone()
+        conn.close()
+        self.username.SetLabel(f"Username : {kry[0]}")
+        self.nama.SetLabel(f"Nama : {kry[3]}")
+        self.alamat.SetLabel(f"Alamat : {kry[4]}")
+        self.nomorHp.SetLabel(f"Nomor Hp : {kry[5]}")
+        self.tahunLahir.SetLabel(f"Tahun Lahir : {kry[6]}")
+
 class formProfilPelanggan (project.ProfilPelanggan):
     def __init__(self, parent, username):
         super().__init__(parent)
@@ -67,7 +123,7 @@ class formTabelPelanggan(project.LihatPelanggan):
         super().__init__(parent)
         conn = sqlite3.connect('project.sqlite')
         cursor = conn.cursor()
-        data = cursor.execute("select Nama, Pelanggan.Username, alamat, NomorHp, tahunLahir, JumlahUang, JumlahHutang from Pelanggan join SaldoPelanggan where Pelanggan.username = SaldoPelanggan.username").fetchall()
+        data = cursor.execute("select Nama, Pelanggan.Username, alamat, NomorHp, tahunLahir, SaldoPelanggan.Saldo, SaldoPelanggan.Hutang from Pelanggan join SaldoPelanggan where Pelanggan.username = SaldoPelanggan.username").fetchall()
         conn.close()
         namaKolom = ('Nama', 'Username', 'Alamat', 'Nomor Hp', 'Tahun Lahir', 'Jumlah Uang', 'Jumlah Hutang')
         for baris in range(len(data)):
@@ -180,7 +236,8 @@ class PinjamTabungan(project.Pinjam):
         self.m_textCtrl22.SetValue(str(piutang))
 
 app = wx.App()
-frame = TambahNabung(parent=None)
+frame = MenuKaryawan(None, "justin")
+# frame = TambahNabung(parent=None)
 # frame = formProfilPelanggan(None, "felynir")
 # frame = LihatSaldo(parent=None)
 # frame = PinjamTabungan (parent=None)

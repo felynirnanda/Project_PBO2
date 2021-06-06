@@ -248,23 +248,43 @@ class MenuUtama ( wx.Frame ):
 class MenuPelanggan ( wx.Frame ):
 
 	def __init__( self, parent ):
-		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Menu Pelanggan", pos = wx.DefaultPosition, size = wx.Size( 500,300 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
+		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Menu Pelanggan", pos = wx.DefaultPosition, size = wx.Size( 500,295 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
 
 		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
 		self.SetBackgroundColour( wx.Colour( 190, 217, 220 ) )
 
 		bSizer9 = wx.BoxSizer( wx.VERTICAL )
 
-		self.m_staticText24 = wx.StaticText( self, wx.ID_ANY, u"Selamat Datang\nSilahkan pilih fitur :\n1. Lihat profil\n2. Tambah tabungan\n3. Bayar Hutang\n4. Pinjam\n5. Tarik uang\n6. Lihat saldo\n7. Keluar", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText24 = wx.StaticText( self, wx.ID_ANY, u"Selamat Datang\nSilahkan pilih fitur :", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText24.Wrap( -1 )
 
 		bSizer9.Add( self.m_staticText24, 0, wx.ALIGN_CENTER, 5 )
 
-		self.m_textCtrl18 = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		bSizer9.Add( self.m_textCtrl18, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
+		gSizer6 = wx.GridSizer( 0, 2, 0, 0 )
 
-		self.m_button12 = wx.Button( self, wx.ID_ANY, u"OK", wx.DefaultPosition, wx.DefaultSize, 0 )
-		bSizer9.Add( self.m_button12, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
+		self.m_button18 = wx.Button( self, wx.ID_ANY, u"Lihat Profil", wx.DefaultPosition, wx.DefaultSize, 0 )
+		gSizer6.Add( self.m_button18, 0, wx.ALL, 5 )
+
+		self.m_button19 = wx.Button( self, wx.ID_ANY, u"Bayar Hutang", wx.DefaultPosition, wx.DefaultSize, 0 )
+		gSizer6.Add( self.m_button19, 0, wx.ALL, 5 )
+
+		self.m_button20 = wx.Button( self, wx.ID_ANY, u"Tambah Tabungan", wx.DefaultPosition, wx.DefaultSize, 0 )
+		gSizer6.Add( self.m_button20, 0, wx.ALL, 5 )
+
+		self.m_button21 = wx.Button( self, wx.ID_ANY, u"Pinjam", wx.DefaultPosition, wx.DefaultSize, 0 )
+		gSizer6.Add( self.m_button21, 0, wx.ALL, 5 )
+
+		self.m_button22 = wx.Button( self, wx.ID_ANY, u"Tarik Uang", wx.DefaultPosition, wx.DefaultSize, 0 )
+		gSizer6.Add( self.m_button22, 0, wx.ALL, 5 )
+
+		self.m_button23 = wx.Button( self, wx.ID_ANY, u"Lihat Saldo", wx.DefaultPosition, wx.DefaultSize, 0 )
+		gSizer6.Add( self.m_button23, 0, wx.ALL, 5 )
+
+		self.m_button24 = wx.Button( self, wx.ID_ANY, u"Keluar", wx.DefaultPosition, wx.DefaultSize, 0 )
+		gSizer6.Add( self.m_button24, 0, wx.ALL, 5 )
+
+
+		bSizer9.Add( gSizer6, 1, wx.EXPAND, 5 )
 
 
 		self.SetSizer( bSizer9 )
@@ -272,8 +292,40 @@ class MenuPelanggan ( wx.Frame ):
 
 		self.Centre( wx.BOTH )
 
+		# Connect Events
+		self.m_button18.Bind( wx.EVT_BUTTON, self.btnLihatProfilPelanggan )
+		self.m_button19.Bind( wx.EVT_BUTTON, self.btnBayarHutang )
+		self.m_button20.Bind( wx.EVT_BUTTON, self.btnTambah )
+		self.m_button21.Bind( wx.EVT_BUTTON, self.btnPinjam )
+		self.m_button22.Bind( wx.EVT_BUTTON, self.btnTarik )
+		self.m_button23.Bind( wx.EVT_BUTTON, self.btnLihatSaldo )
+		self.m_button24.Bind( wx.EVT_BUTTON, self.btnKeluar )
+
 	def __del__( self ):
 		pass
+
+
+	# Virtual event handlers, overide them in your derived class
+	def btnLihatProfilPelanggan( self, event ):
+		event.Skip()
+
+	def btnBayarHutang( self, event ):
+		event.Skip()
+
+	def btnTambah( self, event ):
+		event.Skip()
+
+	def btnPinjam( self, event ):
+		event.Skip()
+
+	def btnTarik( self, event ):
+		event.Skip()
+
+	def btnLihatSaldo( self, event ):
+		event.Skip()
+
+	def btnKeluar( self, event ):
+		event.Skip()
 
 
 ###########################################################################
@@ -290,16 +342,21 @@ class MenuKaryawan ( wx.Frame ):
 
 		bSizer9 = wx.BoxSizer( wx.VERTICAL )
 
-		self.m_staticText24 = wx.StaticText( self, wx.ID_ANY, u"Selamat Datang\nSilahkan pilih fitur :\n1. Lihat Pelanggan\n2. Lihat Profil", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText24 = wx.StaticText( self, wx.ID_ANY, u"Selamat Datang\nSilahkan pilih fitur :", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText24.Wrap( -1 )
 
 		bSizer9.Add( self.m_staticText24, 0, wx.ALIGN_CENTER, 5 )
 
-		self.m_textCtrl18 = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		bSizer9.Add( self.m_textCtrl18, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
+		gSizer5 = wx.GridSizer( 0, 2, 0, 0 )
 
-		self.m_button12 = wx.Button( self, wx.ID_ANY, u"OK", wx.DefaultPosition, wx.DefaultSize, 0 )
-		bSizer9.Add( self.m_button12, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
+		self.m_button16 = wx.Button( self, wx.ID_ANY, u"Lihat Pelanggan", wx.DefaultPosition, wx.DefaultSize, 0 )
+		gSizer5.Add( self.m_button16, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
+
+		self.m_button17 = wx.Button( self, wx.ID_ANY, u"Lihat Profil", wx.DefaultPosition, wx.DefaultSize, 0 )
+		gSizer5.Add( self.m_button17, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
+
+
+		bSizer9.Add( gSizer5, 1, wx.EXPAND, 5 )
 
 
 		self.SetSizer( bSizer9 )
@@ -307,8 +364,20 @@ class MenuKaryawan ( wx.Frame ):
 
 		self.Centre( wx.BOTH )
 
+		# Connect Events
+		self.m_button16.Bind( wx.EVT_BUTTON, self.klikLihatPelanggan )
+		self.m_button17.Bind( wx.EVT_BUTTON, self.klikLihatProfilKaryawan )
+
 	def __del__( self ):
 		pass
+
+
+	# Virtual event handlers, overide them in your derived class
+	def klikLihatPelanggan( self, event ):
+		event.Skip()
+
+	def klikLihatProfilKaryawan( self, event ):
+		event.Skip()
 
 
 ###########################################################################
@@ -359,6 +428,55 @@ class ProfilPelanggan ( wx.Frame ):
 		self.JumlahHutang.Wrap( -1 )
 
 		bSizer12.Add( self.JumlahHutang, 0, wx.ALL, 5 )
+
+
+		self.SetSizer( bSizer12 )
+		self.Layout()
+
+		self.Centre( wx.BOTH )
+
+	def __del__( self ):
+		pass
+
+
+###########################################################################
+## Class ProfilKaryawan
+###########################################################################
+
+class ProfilKaryawan ( wx.Frame ):
+
+	def __init__( self, parent ):
+		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Profil Karyawan", pos = wx.DefaultPosition, size = wx.Size( 500,300 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
+
+		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
+		self.SetBackgroundColour( wx.Colour( 190, 217, 220 ) )
+
+		bSizer12 = wx.BoxSizer( wx.VERTICAL )
+
+		self.nama = wx.StaticText( self, wx.ID_ANY, u"MyLabel", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.nama.Wrap( -1 )
+
+		bSizer12.Add( self.nama, 0, wx.ALL, 5 )
+
+		self.alamat = wx.StaticText( self, wx.ID_ANY, u"MyLabel", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.alamat.Wrap( -1 )
+
+		bSizer12.Add( self.alamat, 0, wx.ALL, 5 )
+
+		self.nomorHp = wx.StaticText( self, wx.ID_ANY, u"MyLabel", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.nomorHp.Wrap( -1 )
+
+		bSizer12.Add( self.nomorHp, 0, wx.ALL, 5 )
+
+		self.username = wx.StaticText( self, wx.ID_ANY, u"MyLabel", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.username.Wrap( -1 )
+
+		bSizer12.Add( self.username, 0, wx.ALL, 5 )
+
+		self.tahunLahir = wx.StaticText( self, wx.ID_ANY, u"MyLabel", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.tahunLahir.Wrap( -1 )
+
+		bSizer12.Add( self.tahunLahir, 0, wx.ALL, 5 )
 
 
 		self.SetSizer( bSizer12 )
@@ -580,22 +698,6 @@ class Pinjam ( wx.Frame ):
 		self.m_textCtrl21 = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
 		gSizer3.Add( self.m_textCtrl21, 0, wx.ALL|wx.ALIGN_RIGHT, 5 )
 
-		self.m_staticText33 = wx.StaticText( self, wx.ID_ANY, u"Masukkan Jumlah hari", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText33.Wrap( -1 )
-
-		gSizer3.Add( self.m_staticText33, 0, wx.ALL, 5 )
-
-		self.m_textCtrl23 = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		gSizer3.Add( self.m_textCtrl23, 0, wx.ALL, 5 )
-
-		self.m_staticText32 = wx.StaticText( self, wx.ID_ANY, u"Jumlah peminjaman anda", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText32.Wrap( -1 )
-
-		gSizer3.Add( self.m_staticText32, 0, wx.ALL, 5 )
-
-		self.m_textCtrl22 = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		gSizer3.Add( self.m_textCtrl22, 0, wx.ALL, 5 )
-
 
 		bSizer13.Add( gSizer3, 0, wx.EXPAND, 5 )
 
@@ -608,16 +710,8 @@ class Pinjam ( wx.Frame ):
 
 		self.Centre( wx.BOTH )
 
-		# Connect Events
-		self.m_button18.Bind( wx.EVT_BUTTON, self.btn_OK_pinjamTabungan )
-
 	def __del__( self ):
 		pass
-
-
-	# Virtual event handlers, overide them in your derived class
-	def btn_OK_pinjamTabungan( self, event ):
-		event.Skip()
 
 
 ###########################################################################
@@ -663,15 +757,7 @@ class Tarik ( wx.Frame ):
 
 		self.Centre( wx.BOTH )
 
-		# Connect Events
-		self.m_button18.Bind( wx.EVT_BUTTON, self.saldoTarik )
-
 	def __del__( self ):
 		pass
-
-
-	# Virtual event handlers, overide them in your derived class
-	def saldoTarik( self, event ):
-		event.Skip()
 
 
