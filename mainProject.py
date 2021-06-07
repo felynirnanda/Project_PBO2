@@ -53,11 +53,11 @@ class MenuKaryawan(project.MenuKaryawan):
 
     def klikLihatPelanggan(self, event):
         lhtPelanggan = formTabelPelanggan(self)
-        lhtPelanggan.show()
+        lhtPelanggan.Show()
         
     def klikLihatProfilKaryawan(self, event):
-        lhtProfilKaryawan = formProfilKaryawan(self)
-        lhtProfilKaryawan.show()
+        lhtProfilKaryawan = formProfilKaryawan(self, self.username)
+        lhtProfilKaryawan.Show()
 
 class MenuPelanggan(project.MenuPelanggan):
     def __init__(self, parent):
@@ -65,26 +65,26 @@ class MenuPelanggan(project.MenuPelanggan):
 
     def btnLihatProfilPelanggan(self, event):
         lhtProfilPelanggan = formProfilPelanggan()
-        lhtProfilPelanggan.show()
+        lhtProfilPelanggan.Show()
 
     # def btnBayarHutang(self, event):
     #     bayarHutang = 
 
     def btnTambah(self, event):
         tambahTabungan = TambahNabung()
-        tambahTabungan.show()
+        tambahTabungan.Show()
 
     def btnPinjam(self, event):
         pinjam = PinjamTabungan()
-        pinjam.show()
+        pinjam.Show()
 
     def btnTarik(self, event):
         tarikUang = tarik()
-        tarikUang.show()
+        tarikUang.Show()
 
     def btnLihatSaldo(self, event):
         lhtSaldo = LihatSaldo()
-        lhtSaldo.show()
+        lhtSaldo.Show()
 
     # def btnKeluar(self, event):
     #     menuUtama = 
@@ -123,14 +123,14 @@ class formTabelPelanggan(project.LihatPelanggan):
         super().__init__(parent)
         conn = sqlite3.connect('project.sqlite')
         cursor = conn.cursor()
-        data = cursor.execute("select Nama, Pelanggan.Username, alamat, NomorHp, tahunLahir, SaldoPelanggan.Saldo, SaldoPelanggan.Hutang from Pelanggan join SaldoPelanggan where Pelanggan.username = SaldoPelanggan.username").fetchall()
+        data = cursor.execute("select Nama, Pelanggan.Username, alamat, NomorHp, tahunLahir, Saldo, Hutang from Pelanggan join SaldoPelanggan where Pelanggan.username = SaldoPelanggan.username").fetchall()
         conn.close()
         namaKolom = ('Nama', 'Username', 'Alamat', 'Nomor Hp', 'Tahun Lahir', 'Jumlah Uang', 'Jumlah Hutang')
         for baris in range(len(data)):
             self.Tabel.AppendRows()
             for kolom in range(len(data[baris])):
                 self.Tabel.SetColLabelValue(kolom, namaKolom[kolom])
-                self.Tabel.SetCellValue(baris, kolom, str(data[baris][kolom]))        
+                self.Tabel.SetCellValue(baris, kolom, str(data[baris][kolom]))    
         
 class lihatSaldo (project.LihatSaldo):
     def __init__(self, parent):
@@ -235,8 +235,34 @@ class PinjamTabungan(project.Pinjam):
         conn.close()
         self.m_textCtrl22.SetValue(str(piutang))
 
+class BayarUtang(project.BayarHutang):
+     def __init__(self, parent, username):
+        super().__init__(parent)
+        self.username = username
+        cursor = conn.cursor()
+        data1 = cursor.execute("select Saldo, Hutang from SaldoPelanggan , where username = ? ", (self.username,)).fetchone()
+        conn.close()
+        self.__jumlahSaldo = jumlahSaldo
+        self.__jumlahHutang = jumlahHutang
+
+     def bayar(self) :
+        if Saldo < Hutang:
+            self.keterangan.SetLabel("maaf saldo Anda kurang untuk membayar utang")
+        else:
+            Saldo = self.__jumlahSaldo - piutang 
+            self.__jumlahSaldo = jumlahSaldo
+            conn = sqlite3.connect('project.sqlite')
+            cursor = conn.cursor()
+            cursor.execute("update SaldoPelanggan set Hutang = 0 ,Uang = ? where username = ? ", (self.__jumlahSaldo, self.__username,))
+            conn.commit()
+            conn.close()
+            self.keterangan.SetLabel("Sudah Terbayar")
+
+
+
 app = wx.App()
-frame = MenuKaryawan(None, "justin")
+frame = BayarUtang(None, "felynir")
+# frame = MenuKaryawan(None, "justin")
 # frame = TambahNabung(parent=None)
 # frame = formProfilPelanggan(None, "felynir")
 # frame = LihatSaldo(parent=None)
