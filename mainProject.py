@@ -247,16 +247,13 @@ class BayarUtang(project.BayarHutang):
         conn.close()
         self.__jumlahSaldo = data1[0]
         self.__jumlahHutang = data1[1]
-
-     def bayar(self, event) :
         if self.__jumlahSaldo < self.__jumlahHutang:
             self.keterangan.SetLabel("maaf saldo Anda kurang untuk membayar utang")
         else:
-            Saldo = self.__jumlahSaldo - piutang 
-            self.__jumlahSaldo = jumlahSaldo
+            self.__jumlahSaldo -= self.__jumlahHutang
             conn = sqlite3.connect('project.sqlite')
             cursor = conn.cursor()
-            cursor.execute("update SaldoPelanggan set Hutang = 0 ,Uang = ? where username = ? ", (self.__jumlahSaldo, self.__username,))
+            cursor.execute("update SaldoPelanggan set Hutang = 0 , Saldo = ? where username = ? ", (self.__jumlahSaldo, self.username,))
             conn.commit()
             conn.close()
             self.keterangan.SetLabel("Sudah Terbayar")
