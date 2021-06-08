@@ -60,15 +60,17 @@ class MenuKaryawan(project.MenuKaryawan):
         lhtProfilKaryawan.Show()
 
 class MenuPelanggan(project.MenuPelanggan):
-    def __init__(self, parent):
+    def __init__(self, parent, username):
         super().__init__(parent)
+        self.username = username
 
     def btnLihatProfilPelanggan(self, event):
         lhtProfilPelanggan = formProfilPelanggan()
         lhtProfilPelanggan.Show()
 
-    # def btnBayarHutang(self, event):
-    #     bayarHutang = 
+    def btnBayarHutang(self, event):
+        bayarHutang = BayarUtang(self, self.username)
+        bayarHutang.Show()
 
     def btnTambah(self, event):
         tambahTabungan = TambahNabung()
@@ -239,14 +241,15 @@ class BayarUtang(project.BayarHutang):
      def __init__(self, parent, username):
         super().__init__(parent)
         self.username = username
+        conn = sqlite3.connect('project.sqlite')
         cursor = conn.cursor()
-        data1 = cursor.execute("select Saldo, Hutang from SaldoPelanggan , where username = ? ", (self.username,)).fetchone()
+        data1 = cursor.execute("select Saldo, Hutang from SaldoPelanggan where username = ? ", (self.username,)).fetchone()
         conn.close()
-        self.__jumlahSaldo = jumlahSaldo
-        self.__jumlahHutang = jumlahHutang
+        self.__jumlahSaldo = data1[0]
+        self.__jumlahHutang = data1[1]
 
-     def bayar(self) :
-        if Saldo < Hutang:
+     def bayar(self, event) :
+        if self.__jumlahSaldo < self.__jumlahHutang:
             self.keterangan.SetLabel("maaf saldo Anda kurang untuk membayar utang")
         else:
             Saldo = self.__jumlahSaldo - piutang 
@@ -261,11 +264,12 @@ class BayarUtang(project.BayarHutang):
 
 
 app = wx.App()
-frame = BayarUtang(None, "felynir")
+# frame = BayarUtang(None, "felynir")
 # frame = MenuKaryawan(None, "justin")
 # frame = TambahNabung(parent=None)
 # frame = formProfilPelanggan(None, "felynir")
 # frame = LihatSaldo(parent=None)
 # frame = PinjamTabungan (parent=None)
+frame = MenuPelanggan(None, "felynir")
 frame.Show()
 app.MainLoop()
