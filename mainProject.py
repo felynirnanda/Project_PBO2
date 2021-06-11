@@ -262,11 +262,11 @@ class BayarUtang(project.BayarHutang):
 
 app = wx.App()
 # frame = BayarUtang(None, "felynir")
-# frame = MenuKaryawan(None, "justin")
+frame = MenuKaryawan(None, "justin")
 # frame = TambahNabung(parent=None)
 # frame = formProfilPelanggan(None, "felynir")
 # frame = LihatSaldo(parent=None)
 # frame = PinjamTabungan (parent=None)
-frame = MenuPelanggan(None, "felynir")
+# frame = MenuPelanggan(None, "felynir")
 frame.Show()
 app.MainLoop()
