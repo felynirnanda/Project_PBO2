@@ -134,14 +134,14 @@ class formTabelPelanggan(project.LihatPelanggan):
                 self.Tabel.SetColLabelValue(kolom, namaKolom[kolom])
                 self.Tabel.SetCellValue(baris, kolom, str(data[baris][kolom]))    
         
-class lihatSaldo (project.LihatSaldo):
-    def __init__(self, parent):
-        super().__init__(parent)
-        conn = sqlite3.connect('project.sqlite')
-        cursor = conn.cursor()
-        hasil = cursor.execute("select jumlahUang from SaldoPelanggan where noID = ?", (str(self.__nomorid),)).fetchone()[0]
-        conn.close()
-        self.m_staticText42.SetValue(str(hasil))
+# class lihatSaldo (project.LihatSaldo):
+#     def __init__(self, parent):
+#         super().__init__(parent)
+#         conn = sqlite3.connect('project.sqlite')
+#         cursor = conn.cursor()
+#         hasil = cursor.execute("select jumlahUang from SaldoPelanggan where noID = ?", (str(self.__nomorid),)).fetchone()[0]
+#         conn.close()
+#         self.m_staticText42.SetValue(str(hasil))
 
 # class tambahTabungan(project.TambahTabungan):
 #     def __init__(self, parent):
@@ -197,6 +197,7 @@ class PinjamTabungan(project.Pinjam):
         super().__init__(parent)
         self.username = username
 
+<<<<<<< Updated upstream
     def m_button18OnButtonClick( self, event ):
         uangPinjam = int(self.m_textCtrl21.GetValue())
         hari = int(self.m_textCtrl19.GetValue())
@@ -208,6 +209,22 @@ class PinjamTabungan(project.Pinjam):
         self.__jumlahHutang = cursor.execute("Select Hutang from SaldoPelanggan where username=?",(self.username,)).fetchone()[0]
         self.__jumlahHutang += piutang
         cursor.execute("update SaldoPelanggan set Hutang = ? where username = ? ", (self.__jumlahHutang, self.username,))
+=======
+    def btn_OK_pinjamTabungan( self, event):
+        conn = sqlite3.connect('project.sqlite')
+        cursor = conn.cursor()
+        jumlahUang = cursor.execute("select jumlahUang from SaldoPelanggan where noID = ?", (str(self.__nomorid),)).fetchone()[0]
+        conn.close()
+        uangPinjam = int(self.m_textCtrl21.GetValue())
+        hari = int(self.m_textCtrl23.GetValue())
+        bulan = hari / 30
+        bungaPinjam = bulan / 12 * 5 / 100 * uangPinjam
+        piutang = uangPinjam + bungaPinjam
+        jumlahSaldo = jumlahUang + uangPinjam 
+        conn = sqlite3.connect('project.sqlite')
+        cursor = conn.cursor()
+        cursor.execute("update SaldoPelanggan set jumlahHutang = ? ,jumlahUang = ? where noID = ? ", (piutang, jumlahSaldo, self.__nomorid,))
+>>>>>>> Stashed changes
         conn.commit()
         conn.close()
         wx.MessageBox('Berhasil Bos', 'Informasi', wx.OK | wx.ICON_INFORMATION)
