@@ -138,6 +138,7 @@ class formTabelPelanggan(project.LihatPelanggan):
                 self.Tabel.SetColLabelValue(kolom, namaKolom[kolom])
                 self.Tabel.SetCellValue(baris, kolom, str(data[baris][kolom]))    
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         
 # class lihatSaldo (project.LihatSaldo):
 #     def __init__(self, parent):
@@ -201,6 +202,23 @@ class tarik(project.Tarik):
         current = cursor.execute("select saldo from SaldoPelanggan where Username = ?", (username,)).fetchone()[0]
         conn.close()
 
+=======
+
+class tarik(project.Tarik):
+    def __init__(self, parent):
+        super().__init__(parent)
+    
+    def btnTarikOnButtonClick( self, event ):
+        uangTarik = self.textJumlahTarik.GetValue()
+        username = self.textUsernameTarik.GetValue()
+        nilai = " "
+
+        conn = sqlite3.connect('project.sqlite')
+        cursor = conn.cursor()
+        current = cursor.execute("select saldo from SaldoPelanggan where Username = ?", (username,)).fetchone()[0]
+        conn.close()
+
+>>>>>>> Stashed changes
         if uangTarik.isdecimal() == False:
             wx.MessageBox('Maaf harus berupa angka saja', 'Informasi', wx.OK | wx.ICON_ERROR)
 
@@ -283,6 +301,7 @@ class PinjamTabungan(project.Pinjam):
 
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     def m_button18OnButtonClick( self, event ):
         uangPinjam = int(self.m_textCtrl21.GetValue())
         hari = int(self.m_textCtrl19.GetValue())
@@ -347,6 +366,17 @@ class BayarUtang(project.BayarHutang):
         cursor = conn.cursor()
         current = cursor.execute("select Hutang from SaldoPelanggan where Username = ?", (username,)).fetchone()[0]
         conn.close()
+=======
+    def btnPinjamOnButtonClick( self, event ):
+        uangPinjam = self.jumlahPinjam.GetValue()
+        username = self.usernamePinjam.GetValue()
+        nilai = " "
+
+        conn = sqlite3.connect('project.sqlite')
+        cursor = conn.cursor()
+        current = cursor.execute("select Hutang from SaldoPelanggan where Username = ?", (username,)).fetchone()[0]
+        conn.close()
+>>>>>>> Stashed changes
 
         if uangPinjam.isdecimal() == False:
             wx.MessageBox('Maaf harus berupa angka saja', 'Informasi', wx.OK | wx.ICON_ERROR)
@@ -364,6 +394,9 @@ class BayarUtang(project.BayarHutang):
             conn.commit()
             conn.close()
             wx.MessageBox('Hutang anda saat ini {}'.format(str(jumlahPinjam)),'Informasi Saldo', wx.OK | wx.ICON_INFORMATION)
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 
 class BayarUtang(project.BayarHutang):
@@ -392,6 +425,7 @@ class BayarUtang(project.BayarHutang):
 app = wx.App()
 # frame = BayarUtang(None, "felynir")
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 <<<<<<< HEAD
 # frame = MenuKaryawan(None, "justin")
 # frame = TambahNabung(None,"felynir")
@@ -401,6 +435,9 @@ frame = Tarik(None,"felynir")
 frame = MenuKaryawan(None, "justin")
 >>>>>>> e79e41b0029b3e77f7f78a2d676a1dac1a62d695
 # frame = TambahNabung(parent=None)
+=======
+# frame = MenuKaryawan(None, "justin")
+>>>>>>> Stashed changes
 =======
 # frame = MenuKaryawan(None, "justin")
 >>>>>>> Stashed changes
