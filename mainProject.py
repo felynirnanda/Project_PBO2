@@ -53,38 +53,40 @@ class MenuKaryawan(project.MenuKaryawan):
 
     def klikLihatPelanggan(self, event):
         lhtPelanggan = formTabelPelanggan(self)
-        lhtPelanggan.show()
+        lhtPelanggan.Show()
         
     def klikLihatProfilKaryawan(self, event):
-        lhtProfilKaryawan = formProfilKaryawan(self)
-        lhtProfilKaryawan.show()
+        lhtProfilKaryawan = formProfilKaryawan(self, self.username)
+        lhtProfilKaryawan.Show()
 
 class MenuPelanggan(project.MenuPelanggan):
-    def __init__(self, parent):
+    def __init__(self, parent, username):
         super().__init__(parent)
+        self.username = username
 
     def btnLihatProfilPelanggan(self, event):
         lhtProfilPelanggan = formProfilPelanggan()
-        lhtProfilPelanggan.show()
+        lhtProfilPelanggan.Show()
 
-    # def btnBayarHutang(self, event):
-    #     bayarHutang = 
+    def btnBayarHutang(self, event):
+        bayarHutang = BayarUtang(self, self.username)
+        bayarHutang.Show()
 
     def btnTambah(self, event):
-        tambahTabungan = TambahNabung()
-        tambahTabungan.show()
+        tambahTabungan = TambahNabung(self, self.username)
+        tambahTabungan.Show()
 
     def btnPinjam(self, event):
         pinjam = PinjamTabungan()
-        pinjam.show()
+        pinjam.Show()
 
     def btnTarik(self, event):
         tarikUang = tarik()
-        tarikUang.show()
+        tarikUang.Show()
 
     def btnLihatSaldo(self, event):
         lhtSaldo = LihatSaldo()
-        lhtSaldo.show()
+        lhtSaldo.Show()
 
     # def btnKeluar(self, event):
     #     menuUtama = 
@@ -123,14 +125,14 @@ class formTabelPelanggan(project.LihatPelanggan):
         super().__init__(parent)
         conn = sqlite3.connect('project.sqlite')
         cursor = conn.cursor()
-        data = cursor.execute("select Nama, Pelanggan.Username, alamat, NomorHp, tahunLahir, SaldoPelanggan.Saldo, SaldoPelanggan.Hutang from Pelanggan join SaldoPelanggan where Pelanggan.username = SaldoPelanggan.username").fetchall()
+        data = cursor.execute("select Nama, Pelanggan.Username, alamat, NomorHp, tahunLahir, Saldo, Hutang from Pelanggan join SaldoPelanggan where Pelanggan.username = SaldoPelanggan.username").fetchall()
         conn.close()
         namaKolom = ('Nama', 'Username', 'Alamat', 'Nomor Hp', 'Tahun Lahir', 'Jumlah Uang', 'Jumlah Hutang')
         for baris in range(len(data)):
             self.Tabel.AppendRows()
             for kolom in range(len(data[baris])):
                 self.Tabel.SetColLabelValue(kolom, namaKolom[kolom])
-                self.Tabel.SetCellValue(baris, kolom, str(data[baris][kolom]))        
+                self.Tabel.SetCellValue(baris, kolom, str(data[baris][kolom]))    
         
 class lihatSaldo (project.LihatSaldo):
     def __init__(self, parent):
@@ -153,93 +155,97 @@ class lihatSaldo (project.LihatSaldo):
 #         conn.commit()
 #         conn.close() 
 
-class tarik(project.Tarik):
-    def __init__(self, parent):
+class Tarik(project.Tarik):
+    def __init__(self, parent, username):
         super().__init__(parent)
-    
-    def saldoTarik(self, event):
-        uangTarik = self.m_textCtrl21.GetValue()
-        if self.__jumlahSaldo < uangTarik:
-            wx.MessageBox('Maaf saldo tidak mencukupi', wx.OK | wx.ICON_ERROR)
-        else:
-            jumlahSaldoTarik = self.__jumlahSaldo - uangTarik
-            self.__jumlahSaldo = jumlahSaldoTarik
-            conn = sqlite3.connect('project.sqlite')
-            cursor = conn.cursor()
-            cursor.execute("update SaldoPelanggan set jumlahUang = ? where noID = ? ", (self.__jumlahSaldo, self.__nomorid,))
-            conn.commit()
-            conn.close()
-            wx.MessageBox('Sisa saldo anda',self.__jumlahSaldo, wx.OK | wx.ICON_ERROR)
+        self.username = username
+
+    def m_button18OnButtonClick(self, event):
+        conn = sqlite3.connect('project.sqlite')
+        cursor = conn.cursor()
+        data2 = cursor.execute("select Saldo from SaldoPelanggan where username = ? ", (self.username,)).fetchone()
+        self.__jumlahSaldo = data2[0]
+        tambahan = self.menarik.GetValue()
+        self.__jumlahSaldo -= int(float(tambahan))
+        cursor.execute("update SaldoPelanggan set Saldo=? where username = ?", (self.__jumlahSaldo, self.username,))
+        conn.commit()
+        conn.close()
+        wx.MessageBox('Berhasil Bos', 'Informasi', wx.OK | wx.ICON_INFORMATION)
+        self.Close()    
 
 
 class TambahNabung (project.TambahTabungan):
-    def __init__(self, parent):
-        project.TambahTabungan.__init__(self, parent)
+    def __init__(self, parent, username):
+        super().__init__(parent)
+        self.username = username
 
-    def btn_OK_tambahTabungan( self, event ):
-        jumlah = self.inputTabungan.GetValue()
-        username = self.inputUsername.GetValue()
-        event.Skip()
-        if jumlah.isdecimal() == False:
-            wx.MessageBox('Maaf harus berupa angka saja', 'Informasi', wx.OK | wx.ICON_ERROR)
-            
-        else:
-            box = wx.MessageDialog(None, 'Apakah data sudah benar', 'Informasi', wx.YES_NO | wx.ICON_QUESTION)
-            kodedlg = box.ShowModal()
-            print(kodedlg)
-            if kodedlg != 5104:
-                waktu = time.ctime()
-                current = str(LihatSaldo(parent=None).btn_LihatSaldo(event=None))
-                jumlah_Saldo = int(current) + int(jumlah)
-                conn = sqlite3.connect('project.sqlite')
-                cursor = conn.cursor()
-                query = cursor.execute("INSERT INTO Transaksi(username,tambahUang,waktu) VALUES (?,?,?)", (username, jumlah, waktu,))
-                cursor.execute(query)
-                query = cursor.execute("update SaldoPelanggan set saldo = ? where Username = ? ", (jumlah_Saldo, username,))
-                cursor.execute(query)
-                conn.commit()
-                conn.close()
-                self.Destroy()
-        
-class LihatSaldo(project.LihatSaldo):
-    def __init__(self, parent):
-        project.LihatSaldo.__init__(self, parent)
-        # self.saldoSekarang = self.btn_LihatSaldo(event=None)
-    
-    def btn_LihatSaldo( self, event ):
-        nama = self.inputNama.GetValue()
+    def btn_OK_tambahTabungan(self, event):
         conn = sqlite3.connect('project.sqlite')
         cursor = conn.cursor()
-        hasil = cursor.execute("select saldo from SaldoPelanggan where Username = ?", (nama,)).fetchone()[0]
+        data2 = cursor.execute("select Saldo from SaldoPelanggan where username = ? ", (self.username,)).fetchone()
+        self.__jumlahSaldo = data2[0]
+        tambahan = self.inputTabungan.GetValue()
+        self.__jumlahSaldo += int(float(tambahan))
+        cursor.execute("update SaldoPelanggan set Saldo=? where username = ?", (self.__jumlahSaldo, self.username,))
+        conn.commit()
         conn.close()
-        self.saldo.SetValue(str(hasil))
-        return hasil
+        wx.MessageBox('Berhasil Bos', 'Informasi', wx.OK | wx.ICON_INFORMATION)
+        self.Close()    
 
 class PinjamTabungan(project.Pinjam):
-    def __init__(self, parent):
+    def __init__(self, parent, username):
         super().__init__(parent)
+        self.username = username
 
-    def btn_OK_pinjamTabungan( self, event ):
-        uangPinjam = self.m_textCtrl21.GetValue()
-        hari = float(self.m_textCtrl23.GetValue())
+    def m_button18OnButtonClick( self, event ):
+        uangPinjam = int(self.m_textCtrl21.GetValue())
+        hari = int(self.m_textCtrl19.GetValue())
         bulan = hari / 30
         bungaPinjam = bulan / 12 * 5 / 100 * uangPinjam
         piutang = uangPinjam + bungaPinjam
-        self.__jumlahHutang += piutang
-        jumlahSaldo = self.__jumlahSaldo + uangPinjam 
-        self.__jumlahSaldo = jumlahSaldo
         conn = sqlite3.connect('project.sqlite')
         cursor = conn.cursor()
-        cursor.execute("update SaldoPelanggan set jumlahHutang = ? ,jumlahUang = ? where noID = ? ", (self.__jumlahHutang, self.__jumlahSaldo, self.__nomorid,))
+        self.__jumlahHutang = cursor.execute("Select Hutang from SaldoPelanggan where username=?",(self.username,)).fetchone()[0]
+        self.__jumlahHutang += piutang
+        cursor.execute("update SaldoPelanggan set Hutang = ? where username = ? ", (self.__jumlahHutang, self.username,))
         conn.commit()
         conn.close()
-        self.m_textCtrl22.SetValue(str(piutang))
+        wx.MessageBox('Berhasil Bos', 'Informasi', wx.OK | wx.ICON_INFORMATION)
+        self.Close()  
+
+class BayarUtang(project.BayarHutang):
+     def __init__(self, parent, username):
+        super().__init__(parent)
+        self.username = username
+        conn = sqlite3.connect('project.sqlite')
+        cursor = conn.cursor()
+        data1 = cursor.execute("select Saldo, Hutang from SaldoPelanggan where username = ? ", (self.username,)).fetchone()
+        conn.close()
+        self.__jumlahSaldo = data1[0]
+        self.__jumlahHutang = data1[1]
+        if self.__jumlahSaldo < self.__jumlahHutang:
+            self.keterangan.SetLabel("maaf saldo Anda kurang untuk membayar utang")
+        else:
+            self.__jumlahSaldo -= self.__jumlahHutang
+            conn = sqlite3.connect('project.sqlite')
+            cursor = conn.cursor()
+            cursor.execute("update SaldoPelanggan set Hutang = 0 , Saldo = ? where username = ? ", (self.__jumlahSaldo, self.username,))
+            conn.commit()
+            conn.close()
+            self.keterangan.SetLabel("Sudah Terbayar")
+
+
 
 app = wx.App()
-frame = MenuKaryawan(None, "justin")
+# frame = BayarUtang(None, "felynir")
+# frame = MenuKaryawan(None, "justin")
+# frame = TambahNabung(None,"felynir")
+# frame = PinjamTabungan(None, "felynir")
+frame = Tarik(None,"felynir")
 # frame = TambahNabung(parent=None)
 # frame = formProfilPelanggan(None, "felynir")
 # frame = LihatSaldo(parent=None)
 # frame = PinjamTabungan (parent=None)
+# frame = MenuPelanggan(None, "felynir")
 frame.Show()
 app.MainLoop()
