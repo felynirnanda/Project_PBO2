@@ -73,7 +73,11 @@ class MenuPelanggan(project.MenuPelanggan):
         bayarHutang.Show()
 
     def btnTambah(self, event):
+<<<<<<< HEAD
         tambahTabungan = TambahNabung(self, self.username)
+=======
+        tambahTabungan = TambahNabung()
+>>>>>>> e79e41b0029b3e77f7f78a2d676a1dac1a62d695
         tambahTabungan.Show()
 
     def btnPinjam(self, event):
@@ -253,12 +257,39 @@ class BayarUtang(project.BayarHutang):
 
 
 
+class BayarUtang(project.BayarHutang):
+     def __init__(self, parent, username):
+        super().__init__(parent)
+        self.username = username
+        conn = sqlite3.connect('project.sqlite')
+        cursor = conn.cursor()
+        data1 = cursor.execute("select Saldo, Hutang from SaldoPelanggan where username = ? ", (self.username,)).fetchone()
+        conn.close()
+        self.__jumlahSaldo = data1[0]
+        self.__jumlahHutang = data1[1]
+        if self.__jumlahSaldo < self.__jumlahHutang:
+            self.keterangan.SetLabel("maaf saldo Anda kurang untuk membayar utang")
+        else:
+            self.__jumlahSaldo -= self.__jumlahHutang
+            conn = sqlite3.connect('project.sqlite')
+            cursor = conn.cursor()
+            cursor.execute("update SaldoPelanggan set Hutang = 0 , Saldo = ? where username = ? ", (self.__jumlahSaldo, self.username,))
+            conn.commit()
+            conn.close()
+            self.keterangan.SetLabel("Sudah Terbayar")
+
+
+
 app = wx.App()
 # frame = BayarUtang(None, "felynir")
+<<<<<<< HEAD
 # frame = MenuKaryawan(None, "justin")
 # frame = TambahNabung(None,"felynir")
 # frame = PinjamTabungan(None, "felynir")
 frame = Tarik(None,"felynir")
+=======
+frame = MenuKaryawan(None, "justin")
+>>>>>>> e79e41b0029b3e77f7f78a2d676a1dac1a62d695
 # frame = TambahNabung(parent=None)
 # frame = formProfilPelanggan(None, "felynir")
 # frame = LihatSaldo(parent=None)

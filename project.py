@@ -329,6 +329,35 @@ class MenuPelanggan ( wx.Frame ):
 
 
 ###########################################################################
+## Class BayarHutang
+###########################################################################
+
+class BayarHutang ( wx.Frame ):
+
+	def __init__( self, parent ):
+		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Bayar Hutang", pos = wx.DefaultPosition, size = wx.Size( 500,300 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
+
+		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
+		self.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_HIGHLIGHTTEXT ) )
+
+		bSizer11 = wx.BoxSizer( wx.VERTICAL )
+
+		self.keterangan = wx.StaticText( self, wx.ID_ANY, u"MyLabel", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.keterangan.Wrap( -1 )
+
+		bSizer11.Add( self.keterangan, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
+
+
+		self.SetSizer( bSizer11 )
+		self.Layout()
+
+		self.Centre( wx.BOTH )
+
+	def __del__( self ):
+		pass
+
+
+###########################################################################
 ## Class MenuKaryawan
 ###########################################################################
 
