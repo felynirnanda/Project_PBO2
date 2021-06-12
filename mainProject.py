@@ -65,7 +65,7 @@ class MenuPelanggan(project.MenuPelanggan):
         self.username = username
 
     def btnLihatProfilPelanggan(self, event):
-        lhtProfilPelanggan = formProfilPelanggan()
+        lhtProfilPelanggan = formProfilPelanggan(self, self.username)
         lhtProfilPelanggan.Show()
 
     def btnBayarHutang(self, event):
@@ -77,16 +77,12 @@ class MenuPelanggan(project.MenuPelanggan):
         tambahTabungan.Show()
 
     def btnPinjam(self, event):
-        pinjam = PinjamTabungan()
+        pinjam = PinjamTabungan(self, self.username)
         pinjam.Show()
 
     def btnTarik(self, event):
-        tarikUang = tarik()
+        tarikUang = tarik(self, self.username)
         tarikUang.Show()
-
-    def btnLihatSaldo(self, event):
-        lhtSaldo = LihatSaldo()
-        lhtSaldo.Show()
 
     # def btnKeluar(self, event):
     #     menuUtama = 
@@ -112,11 +108,11 @@ class formProfilPelanggan (project.ProfilPelanggan):
         data = cursor.execute("select * from Pelanggan where Username=?", (username,)).fetchone()
         saldo = cursor.execute("select * from SaldoPelanggan where Username=?", (username,)).fetchone()
         conn.close()
-        self.nama.SetLabel(f"Nama : {data[0]}")
-        self.username.SetLabel(f"Username : {data[1]}")
-        self.alamat.SetLabel(f"Alamat : {data[2]}")
-        self.nomorHp.SetLabel(f"Nomor Hp : {data[3]}")
-        self.tahunLahir.SetLabel(f"Tahun Lahir : {data[4]}")
+        self.nama.SetLabel(f"Nama : {data[3]}")
+        self.username.SetLabel(f"Username : {data[0]}")
+        self.alamat.SetLabel(f"Alamat : {data[4]}")
+        self.nomorHp.SetLabel(f"Nomor Hp : {data[5]}")
+        self.tahunLahir.SetLabel(f"Tahun Lahir : {data[6]}")
         self.JumlahUang.SetLabel(f"Jumlah Uang : {saldo[1]}")
         self.JumlahHutang.SetLabel(f"Jumlah Hutang : {saldo[2]}")
 
@@ -142,18 +138,6 @@ class lihatSaldo (project.LihatSaldo):
         hasil = cursor.execute("select jumlahUang from SaldoPelanggan where noID = ?", (str(self.__nomorid),)).fetchone()[0]
         conn.close()
         self.m_staticText42.SetValue(str(hasil))
-
-# class tambahTabungan(project.TambahTabungan):
-#     def __init__(self, parent):
-#         super().__init__(parent)
-#         uangMasuk = self.m_textCtrl21.GetValue()
-#         jumlahSaldoTabungan = self.__jumlahSaldo + uangMasuk
-#         self.__jumlahSaldo = jumlahSaldoTabungan
-#         conn = sqlite3.connect('project.sqlite')
-#         cursor = conn.cursor()
-#         cursor.execute("update SaldoPelanggan set jumlahUang = ? where noID = ? ", (jumlahSaldoTabungan, self.__nomorid,))
-#         conn.commit()
-#         conn.close() 
 
 class Tarik(project.Tarik):
     def __init__(self, parent, username):
@@ -239,9 +223,10 @@ class BayarUtang(project.BayarHutang):
 app = wx.App()
 # frame = BayarUtang(None, "felynir")
 # frame = MenuKaryawan(None, "justin")
+frame = MenuPelanggan(None, "felynir")
 # frame = TambahNabung(None,"felynir")
 # frame = PinjamTabungan(None, "felynir")
-frame = Tarik(None,"felynir")
+# frame = Tarik(None,"felynir")
 # frame = TambahNabung(parent=None)
 # frame = formProfilPelanggan(None, "felynir")
 # frame = LihatSaldo(parent=None)
