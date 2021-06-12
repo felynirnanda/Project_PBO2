@@ -3,9 +3,9 @@ import project
 import sqlite3
 import time
 
-class DialogDaftar(project.daftarDialog):
+class DaftarPelanggan(project.daftarPelanggan):
     def __init__(self, parent):
-        project.daftarDialog.__init__(self, parent)
+        project.daftarPelanggan.__init__(self, parent)
 
     def btnSimpanOnButtonClick( self, event ):
         # get value variabel
@@ -24,24 +24,73 @@ class DialogDaftar(project.daftarDialog):
             wx.MessageBox('Maaf!! data nomer HP harus berupa angka')
         elif not tahun.isdecimal():
             wx.MessageBox('Maaf!! data tahun lahir harus berupa angka')
+        elif password != konfrmPass:
+            wx.MessageBox('Maaf!! konfirmasi password tidak sesuai')
         else:
             box = wx.MessageDialog(None, 'Apakah data Anda sudah benar?', 'Informasi', wx.YES_NO | wx.ICON_QUESTION)
             kode = box.ShowModal()
             if kode != 5104:
+                conn = sqlite3.connect('project.sqlite')
+                cursor = conn.cursor()
+                query = "INSERT INTO Pelanggan(username,password,konfirmasi,nama,alamat,nomorHp,tahunLahir) VALUES (?,?,?,?,?,?,?)"
+                cursor.execute(query, (username, password, konfrmPass,nama,alamat,nomerHP,tahun))
+                conn.commit()
+                conn.close()
                 wx.MessageBox('Berhasil Disimpan', 'Informasi', wx.OK | wx.ICON_INFORMATION)
-        
-        
 
     def daftarDialogOnClose( self, event ):
     	self.Destroy()
 
+class DaftarKaryawan(project.daftarKaryawan):
+    def __init__(self, parent):
+        project.daftarKaryawan.__init__(self, parent)
+
+    def btnSimpanOnButtonClick( self, event ):
+        # get value variabel
+        username = self.textDaftarName.GetValue()
+        password = self.textDaftarPass.GetValue()
+        konfrmPass = self.textDaftarKonfirm.GetValue()
+        nama = self.textDaftarNama.GetValue()
+        alamat = self.textDaftarAlamat.GetValue()
+        nomerHP = self.textDaftarNomer.GetValue()
+        tahun = self.textDaftarTahun.GetValue()
+
+        # verifikasi data pengguna
+        if username == "" or password == "" or konfrmPass == "" or nama == "" or alamat == "" or nomerHP == "" or tahun == "":
+            wx.MessageBox('Maaf!! Data Tidak Boleh Kosong', 'Informasi', wx.OK | wx.ICON_EXCLAMATION)
+        elif not nomerHP.isdecimal():
+            wx.MessageBox('Maaf!! data nomer HP harus berupa angka')
+        elif not tahun.isdecimal():
+            wx.MessageBox('Maaf!! data tahun lahir harus berupa angka')
+        elif password != konfrmPass:
+            wx.MessageBox('Maaf!! konfirmasi password tidak sesuai')
+        else:
+            box = wx.MessageDialog(None, 'Apakah data Anda sudah benar?', 'Informasi', wx.YES_NO | wx.ICON_QUESTION)
+            kode = box.ShowModal()
+            if kode != 5104:
+                conn = sqlite3.connect('project.sqlite')
+                cursor = conn.cursor()
+                query = "INSERT INTO Pelanggan(username,password,konfirmasi,nama,alamat,nomorHp,tahunLahir) VALUES (?,?,?,?,?,?,?)"
+                cursor.execute(query, (username, password, konfrmPass,nama,alamat,nomerHP,tahun))
+                conn.commit()
+                conn.close()
+                wx.MessageBox('Berhasil Disimpan', 'Informasi', wx.OK | wx.ICON_INFORMATION)
+
 class MainHome(project.MenuUtama):
     def __init__(self, parent):
-        project.homeFrame.__init__(self, parent)
+        project.MenuUtama.__init__(self, parent)
 
-    def btnDaftarOnButtonClick( self, event ):
-        dialog = DialogDaftar(parent=None)
-        dialog.ShowModal()
+    def btnMenuUtamaOnButtonClick( self, event ):
+        pilihan = self.textMenuUtama.GetValue()
+
+        if pilihan == '1':
+            window = DaftarPelanggan(None)
+            window.Show()
+        elif pilihan == '2':
+            window = DaftarKaryawan(None)
+            window.Show()
+        # dialog = (parent=None)
+        # dialog.ShowModal()
 
     def homeFrameOnClose( self, event ):
     	self.Destroy()
@@ -220,24 +269,24 @@ class TambahNabung (project.TambahTabungan):
                 conn.close()
                 wx.MessageBox('Saldo anda saat ini {}'.format(str(jumlah_Saldo)),'Informasi Saldo', wx.OK | wx.ICON_INFORMATION)
         
-class LihatSaldo(project.LihatSaldo):
-    def __init__(self, parent):
-        project.LihatSaldo.__init__(self, parent)
+# class LihatSaldo(project.LihatSaldo):
+#     def __init__(self, parent):
+#         project.LihatSaldo.__init__(self, parent)
     
-    def btn_LihatSaldo( self, event ):
-        nama = self.inputNama.GetValue()
+#     def btn_LihatSaldo( self, event ):
+#         nama = self.inputNama.GetValue()
 
-        conn = sqlite3.connect('project.sqlite')
-        cursor = conn.cursor()
-        data2 = cursor.execute("select Saldo from SaldoPelanggan where username = ? ", (self.username,)).fetchone()
-        self.__jumlahSaldo = data2[0]
-        tambahan = self.inputTabungan.GetValue()
-        self.__jumlahSaldo += int(float(tambahan))
-        cursor.execute("update SaldoPelanggan set Saldo=? where username = ?", (self.__jumlahSaldo, self.username,))
-        conn.commit()
-        conn.close()
-        wx.MessageBox('Berhasil Bos', 'Informasi', wx.OK | wx.ICON_INFORMATION)
-        self.Close()    
+#         conn = sqlite3.connect('project.sqlite')
+#         cursor = conn.cursor()
+#         data2 = cursor.execute("select Saldo from SaldoPelanggan where username = ? ", (self.username,)).fetchone()
+#         self.__jumlahSaldo = data2[0]
+#         tambahan = self.inputTabungan.GetValue()
+#         self.__jumlahSaldo += int(float(tambahan))
+#         cursor.execute("update SaldoPelanggan set Saldo=? where username = ?", (self.__jumlahSaldo, self.username,))
+#         conn.commit()
+#         conn.close()
+#         wx.MessageBox('Berhasil Bos', 'Informasi', wx.OK | wx.ICON_INFORMATION)
+#         self.Close()    
 
 class PinjamTabungan(project.Pinjam):
     def __init__(self, parent, username):
@@ -322,7 +371,9 @@ app = wx.App()
 # frame = formProfilPelanggan(None, "felynir")
 # frame = MenuPelanggan(None, "felynir")
 # frame = LihatSaldo(parent=None)
-frame = TambahNabung(parent=None)
+# frame = TambahNabung(parent=None)
+# frame = DaftarPelanggan(parent=None)
+frame = MainHome(parent=None)
 # frame = tarik(parent=None)
 # frame = PinjamTabungan(parent=None)
 frame.Show()

@@ -12,13 +12,113 @@ import wx.xrc
 import wx.grid
 
 ###########################################################################
-## Class daftarDialog
+## Class daftarPelanggan
 ###########################################################################
 
-class daftarDialog ( wx.Dialog ):
+class daftarPelanggan ( wx.Dialog ):
 
 	def __init__( self, parent ):
 		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"Daftar Pelanggan", pos = wx.DefaultPosition, size = wx.Size( 358,382 ), style = wx.DEFAULT_DIALOG_STYLE )
+
+		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
+		self.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_INFOBK ) )
+
+		fgSizer4 = wx.FlexGridSizer( 0, 2, 0, 0 )
+		fgSizer4.SetFlexibleDirection( wx.BOTH )
+		fgSizer4.SetNonFlexibleGrowMode( wx.FLEX_GROWMODE_SPECIFIED )
+
+		self.m_staticText2 = wx.StaticText( self, wx.ID_ANY, u"Username", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText2.Wrap( -1 )
+
+		fgSizer4.Add( self.m_staticText2, 0, wx.ALL, 5 )
+
+		self.textDaftarName = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		fgSizer4.Add( self.textDaftarName, 0, wx.ALL, 5 )
+
+		self.m_staticText3 = wx.StaticText( self, wx.ID_ANY, u"Password", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText3.Wrap( -1 )
+
+		fgSizer4.Add( self.m_staticText3, 0, wx.ALL, 5 )
+
+		self.textDaftarPass = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.TE_PASSWORD )
+		fgSizer4.Add( self.textDaftarPass, 0, wx.ALL, 5 )
+
+		self.m_staticText4 = wx.StaticText( self, wx.ID_ANY, u"Konfirmasi Password", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText4.Wrap( -1 )
+
+		fgSizer4.Add( self.m_staticText4, 0, wx.ALL, 5 )
+
+		self.textDaftarKonfirm = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.TE_PASSWORD )
+		fgSizer4.Add( self.textDaftarKonfirm, 0, wx.ALL, 5 )
+
+		self.m_staticText9 = wx.StaticText( self, wx.ID_ANY, u"Nama", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText9.Wrap( -1 )
+
+		fgSizer4.Add( self.m_staticText9, 0, wx.ALL, 5 )
+
+		self.textDaftarNama = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		fgSizer4.Add( self.textDaftarNama, 0, wx.ALL, 5 )
+
+		self.m_staticText10 = wx.StaticText( self, wx.ID_ANY, u"Alamat", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText10.Wrap( -1 )
+
+		fgSizer4.Add( self.m_staticText10, 0, wx.ALL, 5 )
+
+		self.textDaftarAlamat = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		fgSizer4.Add( self.textDaftarAlamat, 0, wx.ALL, 5 )
+
+		self.m_staticText12 = wx.StaticText( self, wx.ID_ANY, u"Nomer HP", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText12.Wrap( -1 )
+
+		fgSizer4.Add( self.m_staticText12, 0, wx.ALL, 5 )
+
+		self.textDaftarNomer = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		fgSizer4.Add( self.textDaftarNomer, 0, wx.ALL, 5 )
+
+		self.m_staticText11 = wx.StaticText( self, wx.ID_ANY, u"Tahun Lahir", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText11.Wrap( -1 )
+
+		fgSizer4.Add( self.m_staticText11, 0, wx.ALL, 5 )
+
+		self.textDaftarTahun = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		fgSizer4.Add( self.textDaftarTahun, 0, wx.ALL, 5 )
+
+		self.btnSimpan = wx.Button( self, wx.ID_ANY, u"Simpan", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.btnSimpan.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_WINDOWTEXT ) )
+		self.btnSimpan.SetBackgroundColour( wx.Colour( 217, 203, 38 ) )
+
+		fgSizer4.Add( self.btnSimpan, 0, 0, 5 )
+
+
+		self.SetSizer( fgSizer4 )
+		self.Layout()
+
+		self.Centre( wx.BOTH )
+
+		# Connect Events
+		self.Bind( wx.EVT_CLOSE, self.daftarDialogOnClose )
+		self.btnSimpan.Bind( wx.EVT_BUTTON, self.btnSimpanOnButtonClick )
+
+	def __del__( self ):
+		pass
+
+
+	# Virtual event handlers, overide them in your derived class
+	def daftarDialogOnClose( self, event ):
+		event.Skip()
+
+	def btnSimpanOnButtonClick( self, event ):
+		event.Skip()
+
+
+###########################################################################
+## Class daftarKaryawan
+###########################################################################
+
+class daftarKaryawan ( wx.Dialog ):
+
+	def __init__( self, parent ):
+		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"Daftar Karyawan", pos = wx.DefaultPosition, size = wx.Size( 358,382 ), style = wx.DEFAULT_DIALOG_STYLE )
 
 		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
 		self.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_INFOBK ) )
@@ -220,16 +320,16 @@ class MenuUtama ( wx.Frame ):
 
 		bSizer5 = wx.BoxSizer( wx.VERTICAL )
 
-		self.m_staticText20 = wx.StaticText( self, wx.ID_ANY, u"Selamat Datang. Silahkan pilih :\n1. Daftar Pelanggan\n2. Login Pelanggan\n3. Login Karyawan\n4. Keluar", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText20 = wx.StaticText( self, wx.ID_ANY, u"Selamat Datang. Silahkan pilih :\n1. Daftar Pelanggan\n2. Daftar Karyawan\n3. Login Pelanggan\n4. Login Karyawan\n5. Keluar", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText20.Wrap( -1 )
 
 		bSizer5.Add( self.m_staticText20, 0, wx.ALIGN_CENTER, 5 )
 
-		self.m_textCtrl14 = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		bSizer5.Add( self.m_textCtrl14, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
+		self.textMenuUtama = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer5.Add( self.textMenuUtama, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
 
-		self.m_button8 = wx.Button( self, wx.ID_ANY, u"OK", wx.DefaultPosition, wx.DefaultSize, 0 )
-		bSizer5.Add( self.m_button8, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
+		self.btnMenuUtama = wx.Button( self, wx.ID_ANY, u"OK", wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer5.Add( self.btnMenuUtama, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
 
 
 		self.SetSizer( bSizer5 )
@@ -237,8 +337,16 @@ class MenuUtama ( wx.Frame ):
 
 		self.Centre( wx.BOTH )
 
+		# Connect Events
+		self.btnMenuUtama.Bind( wx.EVT_BUTTON, self.btnMenuUtamaOnButtonClick )
+
 	def __del__( self ):
 		pass
+
+
+	# Virtual event handlers, overide them in your derived class
+	def btnMenuUtamaOnButtonClick( self, event ):
+		event.Skip()
 
 
 ###########################################################################
