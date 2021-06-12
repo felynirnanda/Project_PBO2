@@ -2031,6 +2031,8 @@
             <property name="window_extra_style"></property>
             <property name="window_name"></property>
             <property name="window_style"></property>
+            <event name="OnClose">LoginKaryawanOnClose</event>
+            <event name="OnInitDialog">LoginKaryawanOnInitDialog</event>
             <object class="wxFlexGridSizer" expanded="0">
                 <property name="cols">2</property>
                 <property name="flexible_direction">wxBOTH</property>
@@ -2279,7 +2281,7 @@
                         <property name="resize">Resizable</property>
                         <property name="show">1</property>
                         <property name="size"></property>
-                        <property name="style"></property>
+                        <property name="style">wxTE_PASSWORD</property>
                         <property name="subclass">; ; forward_declare</property>
                         <property name="toolbar_pane">0</property>
                         <property name="tooltip"></property>
@@ -2340,7 +2342,7 @@
                         <property name="minimize_button">0</property>
                         <property name="minimum_size"></property>
                         <property name="moveable">1</property>
-                        <property name="name">btnLogin</property>
+                        <property name="name">btnLoginKaryawan</property>
                         <property name="pane_border">1</property>
                         <property name="pane_position"></property>
                         <property name="pane_size"></property>
@@ -2363,6 +2365,7 @@
                         <property name="window_extra_style"></property>
                         <property name="window_name"></property>
                         <property name="window_style"></property>
+                        <event name="OnButtonClick">btnLoginKaryawanOnButtonClick</event>
                     </object>
                 </object>
             </object>
@@ -2393,6 +2396,7 @@
             <property name="window_extra_style"></property>
             <property name="window_name"></property>
             <property name="window_style"></property>
+            <event name="OnClose">LoginPelangganOnClose</event>
             <object class="wxFlexGridSizer" expanded="0">
                 <property name="cols">2</property>
                 <property name="flexible_direction">wxBOTH</property>
@@ -2641,7 +2645,7 @@
                         <property name="resize">Resizable</property>
                         <property name="show">1</property>
                         <property name="size"></property>
-                        <property name="style"></property>
+                        <property name="style">wxTE_PASSWORD</property>
                         <property name="subclass">; ; forward_declare</property>
                         <property name="toolbar_pane">0</property>
                         <property name="tooltip"></property>
@@ -2702,7 +2706,7 @@
                         <property name="minimize_button">0</property>
                         <property name="minimum_size"></property>
                         <property name="moveable">1</property>
-                        <property name="name">btnLogin</property>
+                        <property name="name">btnLoginPelanggan</property>
                         <property name="pane_border">1</property>
                         <property name="pane_position"></property>
                         <property name="pane_size"></property>
@@ -2725,6 +2729,7 @@
                         <property name="window_extra_style"></property>
                         <property name="window_name"></property>
                         <property name="window_style"></property>
+                        <event name="OnButtonClick">btnLoginPelangganOnButtonClick</event>
                     </object>
                 </object>
             </object>
@@ -2756,6 +2761,7 @@
             <property name="window_name"></property>
             <property name="window_style">wxTAB_TRAVERSAL</property>
             <property name="xrc_skip_sizer">1</property>
+            <event name="OnClose">MenuUtamaOnClose</event>
             <object class="wxBoxSizer" expanded="0">
                 <property name="minimum_size"></property>
                 <property name="name">bSizer5</property>

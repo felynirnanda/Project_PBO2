@@ -37,6 +37,7 @@ class DaftarPelanggan(project.daftarPelanggan):
                 conn.commit()
                 conn.close()
                 wx.MessageBox('Berhasil Disimpan', 'Informasi', wx.OK | wx.ICON_INFORMATION)
+                self.Hide()
 
     def daftarDialogOnClose( self, event ):
     	self.Destroy()
@@ -70,11 +71,78 @@ class DaftarKaryawan(project.daftarKaryawan):
             if kode != 5104:
                 conn = sqlite3.connect('project.sqlite')
                 cursor = conn.cursor()
-                query = "INSERT INTO Pelanggan(username,password,konfirmasi,nama,alamat,nomorHp,tahunLahir) VALUES (?,?,?,?,?,?,?)"
+                query = "INSERT INTO Karyawan(username,password,konfirmasi,nama,alamat,nomorHp,tahunLahir) VALUES (?,?,?,?,?,?,?)"
                 cursor.execute(query, (username, password, konfrmPass,nama,alamat,nomerHP,tahun))
                 conn.commit()
                 conn.close()
                 wx.MessageBox('Berhasil Disimpan', 'Informasi', wx.OK | wx.ICON_INFORMATION)
+                self.Hide()
+    
+    def daftarDialogOnClose( self, event ):
+    	self.Destroy()
+
+class LoginPelanggan(project.LoginPelanggan):
+    def __init__(self, parent):
+        project.LoginPelanggan.__init__(self, parent)
+
+    def btnLoginPelangganOnButtonClick( self, event ):
+        username = self.textMasukName.GetValue()
+        password = self.textMasukPass.GetValue()
+
+        conn = sqlite3.connect('project.sqlite')
+        cursor = conn.cursor()
+        nama = cursor.execute("select username from Pelanggan where username = ?", (username,)).fetchone()
+        pswd = cursor.execute("select password from Pelanggan where password = ?", (password,)).fetchone()
+        conn.close()
+
+        username = '('+ "'" + username + "'" + ',' + ')'
+        password = '('+ "'" + password + "'" + ',' + ')'
+        nama,pswd = str(nama), str(pswd)
+        print(nama, pswd)
+        print(username, password)
+
+        if username == nama and password == pswd:
+            wx.MessageBox('Login Berhasil', 'Informasi', wx.OK | wx.ICON_INFORMATION)
+            window = MenuPelanggan(None, username)
+            self.Hide()
+            window.Show()
+        else:
+            wx.MessageBox('Login Gagal, silahkan daftar', 'Informasi', wx.OK | wx.ICON_ERROR)
+    
+    def LoginPelangganOnClose( self, event ):
+    	self.Destroy()
+
+
+class LoginKaryawan(project.LoginKaryawan):
+    def __init__(self, parent):
+        project.LoginKaryawan.__init__(self, parent)
+
+    def btnLoginKaryawanOnButtonClick( self, event ):
+        username = self.textMasukName.GetValue()
+        password = self.textMasukPass.GetValue()
+
+        conn = sqlite3.connect('project.sqlite')
+        cursor = conn.cursor()
+        nama = cursor.execute("select username from Karyawan where username = ?", (username,)).fetchone()
+        pswd = cursor.execute("select password from Karyawan where password = ?", (password,)).fetchone()
+        conn.close()
+
+        username = '('+ "'" + username + "'" + ',' + ')'
+        password = '('+ "'" + password + "'" + ',' + ')'
+        nama,pswd = str(nama), str(pswd)
+        print(nama, pswd)
+        print(username, password)
+
+        if username == nama and password == pswd:
+            wx.MessageBox('Login Berhasil', 'Informasi', wx.OK | wx.ICON_INFORMATION)
+            window = MenuKaryawan(None, username)
+            self.Hide()
+            window.Show()
+        else:
+            wx.MessageBox('Login Gagal, silahkan daftar', 'Informasi', wx.OK | wx.ICON_ERROR)
+    
+    def LoginKaryawanOnClose( self, event ):
+    	self.Destroy()
 
 class MainHome(project.MenuUtama):
     def __init__(self, parent):
@@ -89,10 +157,18 @@ class MainHome(project.MenuUtama):
         elif pilihan == '2':
             window = DaftarKaryawan(None)
             window.Show()
+        elif pilihan == '3':
+            window = LoginPelanggan(None)
+            self.Hide()
+            window.Show()
+        elif pilihan == '4':
+            window = LoginKaryawan(None)
+            self.Hide()
+            window.Show()
         # dialog = (parent=None)
         # dialog.ShowModal()
 
-    def homeFrameOnClose( self, event ):
+    def MenuUtamaOnClose( self, event ):
     	self.Destroy()
 
 class MenuKaryawan(project.MenuKaryawan):

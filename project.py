@@ -241,13 +241,13 @@ class LoginKaryawan ( wx.Dialog ):
 
 		fgSizer5.Add( self.m_staticText6, 0, wx.ALL, 5 )
 
-		self.textMasukPass = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.textMasukPass = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.TE_PASSWORD )
 		fgSizer5.Add( self.textMasukPass, 0, wx.ALL, 5 )
 
-		self.btnLogin = wx.Button( self, wx.ID_ANY, u"Masuk", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.btnLogin.SetBackgroundColour( wx.Colour( 217, 203, 38 ) )
+		self.btnLoginKaryawan = wx.Button( self, wx.ID_ANY, u"Masuk", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.btnLoginKaryawan.SetBackgroundColour( wx.Colour( 217, 203, 38 ) )
 
-		fgSizer5.Add( self.btnLogin, 0, wx.ALL, 5 )
+		fgSizer5.Add( self.btnLoginKaryawan, 0, wx.ALL, 5 )
 
 
 		self.SetSizer( fgSizer5 )
@@ -255,8 +255,24 @@ class LoginKaryawan ( wx.Dialog ):
 
 		self.Centre( wx.BOTH )
 
+		# Connect Events
+		self.Bind( wx.EVT_CLOSE, self.LoginKaryawanOnClose )
+		self.Bind( wx.EVT_INIT_DIALOG, self.LoginKaryawanOnInitDialog )
+		self.btnLoginKaryawan.Bind( wx.EVT_BUTTON, self.btnLoginKaryawanOnButtonClick )
+
 	def __del__( self ):
 		pass
+
+
+	# Virtual event handlers, overide them in your derived class
+	def LoginKaryawanOnClose( self, event ):
+		event.Skip()
+
+	def LoginKaryawanOnInitDialog( self, event ):
+		event.Skip()
+
+	def btnLoginKaryawanOnButtonClick( self, event ):
+		event.Skip()
 
 
 ###########################################################################
@@ -288,13 +304,13 @@ class LoginPelanggan ( wx.Dialog ):
 
 		fgSizer5.Add( self.m_staticText6, 0, wx.ALL, 5 )
 
-		self.textMasukPass = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.textMasukPass = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.TE_PASSWORD )
 		fgSizer5.Add( self.textMasukPass, 0, wx.ALL, 5 )
 
-		self.btnLogin = wx.Button( self, wx.ID_ANY, u"Masuk", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.btnLogin.SetBackgroundColour( wx.Colour( 217, 203, 38 ) )
+		self.btnLoginPelanggan = wx.Button( self, wx.ID_ANY, u"Masuk", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.btnLoginPelanggan.SetBackgroundColour( wx.Colour( 217, 203, 38 ) )
 
-		fgSizer5.Add( self.btnLogin, 0, wx.ALL, 5 )
+		fgSizer5.Add( self.btnLoginPelanggan, 0, wx.ALL, 5 )
 
 
 		self.SetSizer( fgSizer5 )
@@ -302,8 +318,20 @@ class LoginPelanggan ( wx.Dialog ):
 
 		self.Centre( wx.BOTH )
 
+		# Connect Events
+		self.Bind( wx.EVT_CLOSE, self.LoginPelangganOnClose )
+		self.btnLoginPelanggan.Bind( wx.EVT_BUTTON, self.btnLoginPelangganOnButtonClick )
+
 	def __del__( self ):
 		pass
+
+
+	# Virtual event handlers, overide them in your derived class
+	def LoginPelangganOnClose( self, event ):
+		event.Skip()
+
+	def btnLoginPelangganOnButtonClick( self, event ):
+		event.Skip()
 
 
 ###########################################################################
@@ -338,6 +366,7 @@ class MenuUtama ( wx.Frame ):
 		self.Centre( wx.BOTH )
 
 		# Connect Events
+		self.Bind( wx.EVT_CLOSE, self.MenuUtamaOnClose )
 		self.btnMenuUtama.Bind( wx.EVT_BUTTON, self.btnMenuUtamaOnButtonClick )
 
 	def __del__( self ):
@@ -345,6 +374,9 @@ class MenuUtama ( wx.Frame ):
 
 
 	# Virtual event handlers, overide them in your derived class
+	def MenuUtamaOnClose( self, event ):
+		event.Skip()
+
 	def btnMenuUtamaOnButtonClick( self, event ):
 		event.Skip()
 
