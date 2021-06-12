@@ -568,72 +568,6 @@ class LihatPelanggan ( wx.Frame ):
 
 
 ###########################################################################
-## Class LihatSaldo
-###########################################################################
-
-class LihatSaldo ( wx.Frame ):
-
-	def __init__( self, parent ):
-		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Lihat Saldo", pos = wx.DefaultPosition, size = wx.Size( 500,300 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
-
-		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
-		self.SetBackgroundColour( wx.Colour( 190, 217, 220 ) )
-
-		bSizer12 = wx.BoxSizer( wx.VERTICAL )
-
-		self.m_staticText32 = wx.StaticText( self, wx.ID_ANY, u"Lihat Saldo", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText32.Wrap( -1 )
-
-		self.m_staticText32.SetFont( wx.Font( 10, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD, False, "Arial" ) )
-
-		bSizer12.Add( self.m_staticText32, 0, wx.ALIGN_CENTER|wx.ALL, 5 )
-
-		gSizer5 = wx.GridSizer( 0, 2, 0, 0 )
-
-		self.m_staticText31 = wx.StaticText( self, wx.ID_ANY, u"username", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText31.Wrap( -1 )
-
-		gSizer5.Add( self.m_staticText31, 0, wx.ALL, 5 )
-
-		self.inputNama = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		gSizer5.Add( self.inputNama, 0, wx.ALIGN_RIGHT|wx.ALL, 5 )
-
-		self.m_staticText35 = wx.StaticText( self, wx.ID_ANY, u"Jumlah Saldo Anda Saat ini", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText35.Wrap( -1 )
-
-		gSizer5.Add( self.m_staticText35, 0, wx.ALL, 5 )
-
-		self.saldo = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		gSizer5.Add( self.saldo, 0, wx.ALIGN_RIGHT|wx.ALL, 5 )
-
-		self.m_button15 = wx.Button( self, wx.ID_ANY, u"LIHAT", wx.DefaultPosition, wx.DefaultSize, 0 )
-		gSizer5.Add( self.m_button15, 0, wx.ALL, 5 )
-
-		self.m_button16 = wx.Button( self, wx.ID_ANY, u"OK", wx.DefaultPosition, wx.DefaultSize, 0 )
-		gSizer5.Add( self.m_button16, 0, wx.ALIGN_RIGHT|wx.ALL, 5 )
-
-
-		bSizer12.Add( gSizer5, 0, wx.EXPAND, 5 )
-
-
-		self.SetSizer( bSizer12 )
-		self.Layout()
-
-		self.Centre( wx.BOTH )
-
-		# Connect Events
-		self.m_button15.Bind( wx.EVT_BUTTON, self.btn_LihatSaldo )
-
-	def __del__( self ):
-		pass
-
-
-	# Virtual event handlers, overide them in your derived class
-	def btn_LihatSaldo( self, event ):
-		event.Skip()
-
-
-###########################################################################
 ## Class TambahTabungan
 ###########################################################################
 
@@ -655,14 +589,6 @@ class TambahTabungan ( wx.Frame ):
 		bSizer13.Add( self.m_staticText30, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALL, 5 )
 
 		gSizer3 = wx.GridSizer( 0, 2, 0, 0 )
-
-		self.m_staticText301 = wx.StaticText( self, wx.ID_ANY, u"username ", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText301.Wrap( -1 )
-
-		gSizer3.Add( self.m_staticText301, 0, wx.ALL, 5 )
-
-		self.inputUsername = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		gSizer3.Add( self.inputUsername, 0, wx.ALIGN_RIGHT|wx.ALL, 5 )
 
 		self.m_staticText31 = wx.StaticText( self, wx.ID_ANY, u"Masukan jumlah uang yang ingin Anda tabung : ", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText31.Wrap( -1 )
@@ -719,27 +645,27 @@ class Pinjam ( wx.Frame ):
 
 		gSizer3 = wx.GridSizer( 0, 2, 0, 0 )
 
-		self.usernamePinjam = wx.StaticText( self, wx.ID_ANY, u"Username", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.usernamePinjam.Wrap( -1 )
-
-		gSizer3.Add( self.usernamePinjam, 0, wx.ALL, 5 )
-
-		self.usernamePinjam = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		gSizer3.Add( self.usernamePinjam, 0, wx.ALIGN_RIGHT|wx.ALL, 5 )
-
 		self.m_staticText31 = wx.StaticText( self, wx.ID_ANY, u"Masukan jumlah uang yang ingin Anda pinjam :", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText31.Wrap( -1 )
 
 		gSizer3.Add( self.m_staticText31, 0, wx.ALL, 5 )
 
-		self.jumlahPinjam = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		gSizer3.Add( self.jumlahPinjam, 0, wx.ALL|wx.ALIGN_RIGHT, 5 )
+		self.m_textCtrl21 = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		gSizer3.Add( self.m_textCtrl21, 0, wx.ALL|wx.ALIGN_RIGHT, 5 )
+
+		self.m_staticText38 = wx.StaticText( self, wx.ID_ANY, u"Durasi Peminjaman (Hari) :", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText38.Wrap( -1 )
+
+		gSizer3.Add( self.m_staticText38, 0, wx.ALL, 5 )
+
+		self.m_textCtrl19 = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		gSizer3.Add( self.m_textCtrl19, 0, wx.ALL|wx.ALIGN_RIGHT, 5 )
 
 
 		bSizer13.Add( gSizer3, 0, wx.EXPAND, 5 )
 
-		self.btnPinjam = wx.Button( self, wx.ID_ANY, u"OK", wx.DefaultPosition, wx.DefaultSize, 0 )
-		bSizer13.Add( self.btnPinjam, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
+		self.m_button18 = wx.Button( self, wx.ID_ANY, u"OK", wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer13.Add( self.m_button18, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
 
 
 		self.SetSizer( bSizer13 )
@@ -748,14 +674,14 @@ class Pinjam ( wx.Frame ):
 		self.Centre( wx.BOTH )
 
 		# Connect Events
-		self.btnPinjam.Bind( wx.EVT_BUTTON, self.btnPinjamOnButtonClick )
+		self.m_button18.Bind( wx.EVT_BUTTON, self.m_button18OnButtonClick )
 
 	def __del__( self ):
 		pass
 
 
 	# Virtual event handlers, overide them in your derived class
-	def btnPinjamOnButtonClick( self, event ):
+	def m_button18OnButtonClick( self, event ):
 		event.Skip()
 
 
@@ -782,27 +708,19 @@ class Tarik ( wx.Frame ):
 
 		gSizer3 = wx.GridSizer( 0, 2, 0, 0 )
 
-		self.usernameTarik = wx.StaticText( self, wx.ID_ANY, u"Username", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.usernameTarik.Wrap( -1 )
-
-		gSizer3.Add( self.usernameTarik, 0, wx.ALL, 5 )
-
-		self.textUsernameTarik = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		gSizer3.Add( self.textUsernameTarik, 0, wx.ALL|wx.ALIGN_RIGHT, 5 )
-
 		self.m_staticText31 = wx.StaticText( self, wx.ID_ANY, u"Masukan jumlah uang yang ingin Anda ambil :", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText31.Wrap( -1 )
 
 		gSizer3.Add( self.m_staticText31, 0, wx.ALL, 5 )
 
-		self.textJumlahTarik = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		gSizer3.Add( self.textJumlahTarik, 0, wx.ALIGN_RIGHT|wx.ALL, 5 )
+		self.menarik = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		gSizer3.Add( self.menarik, 0, wx.ALL|wx.ALIGN_RIGHT, 5 )
 
 
 		bSizer13.Add( gSizer3, 0, wx.EXPAND, 5 )
 
-		self.btnTarik = wx.Button( self, wx.ID_ANY, u"OK", wx.DefaultPosition, wx.DefaultSize, 0 )
-		bSizer13.Add( self.btnTarik, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
+		self.m_button18 = wx.Button( self, wx.ID_ANY, u"OK", wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer13.Add( self.m_button18, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
 
 
 		self.SetSizer( bSizer13 )
@@ -811,14 +729,14 @@ class Tarik ( wx.Frame ):
 		self.Centre( wx.BOTH )
 
 		# Connect Events
-		self.btnTarik.Bind( wx.EVT_BUTTON, self.btnTarikOnButtonClick )
+		self.m_button18.Bind( wx.EVT_BUTTON, self.m_button18OnButtonClick )
 
 	def __del__( self ):
 		pass
 
 
 	# Virtual event handlers, overide them in your derived class
-	def btnTarikOnButtonClick( self, event ):
+	def m_button18OnButtonClick( self, event ):
 		event.Skip()
 
 
