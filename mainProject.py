@@ -81,11 +81,8 @@ class MenuPelanggan(project.MenuPelanggan):
         pinjam.Show()
 
     def btnTarik(self, event):
-        tarikUang = tarik(self, self.username)
+        tarikUang = Tarik(self, self.username)
         tarikUang.Show()
-
-    # def btnKeluar(self, event):
-    #     menuUtama = 
 
 class formProfilKaryawan (project.ProfilKaryawan):
     def __init__(self, parent, username):
@@ -129,6 +126,7 @@ class formTabelPelanggan(project.LihatPelanggan):
             for kolom in range(len(data[baris])):
                 self.Tabel.SetColLabelValue(kolom, namaKolom[kolom])
                 self.Tabel.SetCellValue(baris, kolom, str(data[baris][kolom]))    
+<<<<<<< HEAD
 
 class tarik(project.Tarik):
     def __init__(self, parent):
@@ -146,6 +144,9 @@ class tarik(project.Tarik):
 <<<<<<< Updated upstream
         self.m_staticText42.SetValue(str(hasil))
 
+=======
+        
+>>>>>>> dd701cfb0fa16ab276640e816e90b6ddd85790f6
 class Tarik(project.Tarik):
     def __init__(self, parent, username):
         super().__init__(parent)
