@@ -277,12 +277,6 @@ class MenuPelanggan ( wx.Frame ):
 		self.m_button22 = wx.Button( self, wx.ID_ANY, u"Tarik Uang", wx.DefaultPosition, wx.DefaultSize, 0 )
 		gSizer6.Add( self.m_button22, 0, wx.ALL, 5 )
 
-		self.m_button23 = wx.Button( self, wx.ID_ANY, u"Lihat Saldo", wx.DefaultPosition, wx.DefaultSize, 0 )
-		gSizer6.Add( self.m_button23, 0, wx.ALL, 5 )
-
-		self.m_button24 = wx.Button( self, wx.ID_ANY, u"Keluar", wx.DefaultPosition, wx.DefaultSize, 0 )
-		gSizer6.Add( self.m_button24, 0, wx.ALL, 5 )
-
 
 		bSizer9.Add( gSizer6, 1, wx.EXPAND, 5 )
 
@@ -298,8 +292,6 @@ class MenuPelanggan ( wx.Frame ):
 		self.m_button20.Bind( wx.EVT_BUTTON, self.btnTambah )
 		self.m_button21.Bind( wx.EVT_BUTTON, self.btnPinjam )
 		self.m_button22.Bind( wx.EVT_BUTTON, self.btnTarik )
-		self.m_button23.Bind( wx.EVT_BUTTON, self.btnLihatSaldo )
-		self.m_button24.Bind( wx.EVT_BUTTON, self.btnKeluar )
 
 	def __del__( self ):
 		pass
@@ -319,12 +311,6 @@ class MenuPelanggan ( wx.Frame ):
 		event.Skip()
 
 	def btnTarik( self, event ):
-		event.Skip()
-
-	def btnLihatSaldo( self, event ):
-		event.Skip()
-
-	def btnKeluar( self, event ):
 		event.Skip()
 
 

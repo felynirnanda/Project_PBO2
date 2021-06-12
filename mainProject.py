@@ -84,9 +84,6 @@ class MenuPelanggan(project.MenuPelanggan):
         tarikUang = Tarik(self, self.username)
         tarikUang.Show()
 
-    # def btnKeluar(self, event):
-    #     menuUtama = 
-
 class formProfilKaryawan (project.ProfilKaryawan):
     def __init__(self, parent, username):
         super().__init__(parent)
