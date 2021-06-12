@@ -126,7 +126,6 @@ class formTabelPelanggan(project.LihatPelanggan):
             for kolom in range(len(data[baris])):
                 self.Tabel.SetColLabelValue(kolom, namaKolom[kolom])
                 self.Tabel.SetCellValue(baris, kolom, str(data[baris][kolom]))    
-<<<<<<< HEAD
 
 class tarik(project.Tarik):
     def __init__(self, parent):
@@ -141,12 +140,9 @@ class tarik(project.Tarik):
         cursor = conn.cursor()
         current = cursor.execute("select saldo from SaldoPelanggan where Username = ?", (username,)).fetchone()[0]
         conn.close()
-<<<<<<< Updated upstream
         self.m_staticText42.SetValue(str(hasil))
 
-=======
-        
->>>>>>> dd701cfb0fa16ab276640e816e90b6ddd85790f6
+
 class Tarik(project.Tarik):
     def __init__(self, parent, username):
         super().__init__(parent)
@@ -164,7 +160,7 @@ class Tarik(project.Tarik):
         conn.close()
         wx.MessageBox('Berhasil Bos', 'Informasi', wx.OK | wx.ICON_INFORMATION)
         self.Close()    
-=======
+
 
         if uangTarik.isdecimal() == False:
             wx.MessageBox('Maaf harus berupa angka saja', 'Informasi', wx.OK | wx.ICON_ERROR)
@@ -185,7 +181,7 @@ class Tarik(project.Tarik):
                 conn.commit()
                 conn.close()
                 wx.MessageBox('Sisa saldo anda {}'.format(str(jumlahSaldoTarik)),'Informasi Saldo', wx.OK | wx.ICON_INFORMATION)
->>>>>>> Stashed changes
+
 
 
 class TambahNabung (project.TambahTabungan):
@@ -193,9 +189,6 @@ class TambahNabung (project.TambahTabungan):
         super().__init__(parent)
         self.username = username
 
-<<<<<<< Updated upstream
-    def btn_OK_tambahTabungan(self, event):
-=======
     def btn_OK_tambahTabungan( self, event ):
         jumlah = self.inputTabungan.GetValue()
         username = self.inputUsername.GetValue()
@@ -233,7 +226,7 @@ class LihatSaldo(project.LihatSaldo):
     
     def btn_LihatSaldo( self, event ):
         nama = self.inputNama.GetValue()
->>>>>>> Stashed changes
+
         conn = sqlite3.connect('project.sqlite')
         cursor = conn.cursor()
         data2 = cursor.execute("select Saldo from SaldoPelanggan where username = ? ", (self.username,)).fetchone()
@@ -251,7 +244,7 @@ class PinjamTabungan(project.Pinjam):
         super().__init__(parent)
         self.username = username
 
-<<<<<<< Updated upstream
+
     def m_button18OnButtonClick( self, event ):
         uangPinjam = int(self.m_textCtrl21.GetValue())
         hari = int(self.m_textCtrl19.GetValue())
@@ -267,7 +260,7 @@ class PinjamTabungan(project.Pinjam):
         conn.close()
         wx.MessageBox('Berhasil Bos', 'Informasi', wx.OK | wx.ICON_INFORMATION)
         self.Close()  
-=======
+
     def btnPinjamOnButtonClick( self, event ):
         uangPinjam = self.jumlahPinjam.GetValue()
         username = self.usernamePinjam.GetValue()
@@ -294,7 +287,6 @@ class PinjamTabungan(project.Pinjam):
             conn.commit()
             conn.close()
             wx.MessageBox('Hutang anda saat ini {}'.format(str(jumlahPinjam)),'Informasi Saldo', wx.OK | wx.ICON_INFORMATION)
->>>>>>> Stashed changes
 
 class BayarUtang(project.BayarHutang):
      def __init__(self, parent, username):
@@ -322,14 +314,11 @@ class BayarUtang(project.BayarHutang):
 app = wx.App()
 # frame = BayarUtang(None, "felynir")
 # frame = MenuKaryawan(None, "justin")
-<<<<<<< Updated upstream
-frame = MenuPelanggan(None, "felynir")
+# frame = MenuPelanggan(None, "felynir")
 # frame = TambahNabung(None,"felynir")
 # frame = PinjamTabungan(None, "felynir")
 # frame = Tarik(None,"felynir")
 # frame = TambahNabung(parent=None)
-=======
->>>>>>> Stashed changes
 # frame = formProfilPelanggan(None, "felynir")
 # frame = MenuPelanggan(None, "felynir")
 # frame = LihatSaldo(parent=None)
