@@ -127,15 +127,6 @@ class formTabelPelanggan(project.LihatPelanggan):
                 self.Tabel.SetColLabelValue(kolom, namaKolom[kolom])
                 self.Tabel.SetCellValue(baris, kolom, str(data[baris][kolom]))    
         
-# class lihatSaldo (project.LihatSaldo):
-#     def __init__(self, parent):
-#         super().__init__(parent)
-#         conn = sqlite3.connect('project.sqlite')
-#         cursor = conn.cursor()
-#         hasil = cursor.execute("select jumlahUang from SaldoPelanggan where noID = ?", (str(self.__nomorid),)).fetchone()[0]
-#         conn.close()
-#         self.m_staticText42.SetValue(str(hasil))
-
 class Tarik(project.Tarik):
     def __init__(self, parent, username):
         super().__init__(parent)
